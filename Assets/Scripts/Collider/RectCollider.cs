@@ -14,6 +14,11 @@ public class RectCollider : MonoBehaviour
     public Vector2 Max => max;
     public Vector2 Min => min;
 
+    private void Start()
+    {
+        Singleton<GameManager>.Instance.RegisterCollider(this);
+    }
+
     void Update()
     {
         
