@@ -26,4 +26,9 @@ public class GameManager : Singleton<GameManager>
     {
         colliderManager.RegisterCollider(r);
     }
+
+    public ColliderManager GetColliderManager()
+    {
+        return colliderManager;
+    }
 }

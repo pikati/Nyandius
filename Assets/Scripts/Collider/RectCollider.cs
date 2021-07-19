@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RectCollider : MonoBehaviour
+public class RectCollider : Collider
 {
     [SerializeField]
     private Vector2 center;
@@ -14,13 +14,14 @@ public class RectCollider : MonoBehaviour
     public Vector2 Max => max;
     public Vector2 Min => min;
 
-    private void Start()
+    protected override void Initialize()
     {
+        base.Initialize();
         Singleton<GameManager>.Instance.RegisterCollider(this);
     }
 
-    void Update()
+    public Character GetCharacter()
     {
-        
+        return character;
     }
 }
