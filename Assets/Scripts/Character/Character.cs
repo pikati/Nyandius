@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
+    public enum CharacterState
+    {
+        Move,
+        Attack,
+        Damage
+    };
+
+    protected CharacterState cState = CharacterState.Move;
+    public CharacterState CState => cState;
     protected Collider myCollider;
     private void Start()
     {
@@ -23,6 +32,21 @@ public class Character : MonoBehaviour
     protected virtual void UpdateFrame()
     {
 
+    }
+
+    protected virtual void Damage()
+    {
+
+    }
+
+    protected virtual void Attack()
+    {
+
+    }
+
+    protected virtual void ChangeCharacterState(CharacterState state)
+    {
+        cState = state;
     }
 
     public virtual void OnCollision(Collider col)

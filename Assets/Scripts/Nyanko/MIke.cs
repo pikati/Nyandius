@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Mike : Character
 {
+    private GameTimer animTimer = new GameTimer(0.5f);
     protected override void Initialize()
     {
         base.Initialize();
@@ -11,14 +12,39 @@ public class Mike : Character
 
     protected override void UpdateFrame()
     {
-        base.UpdateFrame();
+        if(Singleton<InputController>.Instance.A)
+        {
+            Attack();
+        }
+        if(cState != CharacterState.Move)
+        {
+            if(animTimer.UpdateTimer())
+            {
+                ChangeCharacterState(CharacterState.Move);
+                animTimer.ResetTimer(0.5f);
+            }
+        }
+    }
+
+    protected override void Attack()
+    {
+        ChangeCharacterState(CharacterState.Attack);
+        animTimer.ResetTimer(0.5f);
+    }
+
+    protected override void Damage()
+    {
+        ChangeCharacterState(CharacterState.Damage);
+        animTimer.ResetTimer(0.5f);
     }
 
     public override void OnCollision(Collider col)
     {
         if(col.CompareTag("Enemy"))
         {
-            Debug.Log("“G");
+            Damage();
         }
     }
+
+
 }

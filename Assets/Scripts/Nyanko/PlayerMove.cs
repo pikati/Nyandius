@@ -4,35 +4,35 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    // Start is called before the first frame update
+    
+
+    [SerializeField]
+    private float speed = 1.0f;
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
 
         var move = Singleton<InputController>.Instance.MoveValue;
-        transform.position += new Vector3(move.x * Time.deltaTime, move.y * Time.deltaTime);
-        if (Singleton<InputController>.Instance.Up)
+        if(move.magnitude > 0)
         {
-            transform.position += new Vector3(0, 1.0f * Time.deltaTime, 0);
+            Move(move);
         }
-        if (Singleton<InputController>.Instance.Down)
+        else
         {
-            transform.position += new Vector3(0, -1.0f * Time.deltaTime, 0);
+            var keyMove = new Vector2(-Singleton<InputController>.Instance.Left + Singleton<InputController>.Instance.Right, Singleton<InputController>.Instance.Up + -Singleton<InputController>.Instance.Down);
+            Move(keyMove);
+        }
+    }
 
-        }
-        if (Singleton<InputController>.Instance.Left)
+    private void Move(Vector2 move)
+    {
+        if(move.magnitude > 0)
         {
-            transform.position += new Vector3(-1.0f * Time.deltaTime, 0, 0);
-
-        }
-        if (Singleton<InputController>.Instance.Right)
-        {
-            transform.position += new Vector3(1.0f * Time.deltaTime, 0, 0);
+            transform.position += new Vector3(move.x * Time.deltaTime, move.y * Time.deltaTime) * speed;
         }
     }
 }

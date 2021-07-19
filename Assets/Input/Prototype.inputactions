@@ -127,33 +127,33 @@
                 },
                 {
                     "name": "Up",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "f7fde95c-559e-4c9b-b080-3a6680d73837",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Double",
                     "processors": "",
                     "interactions": ""
                 },
                 {
                     "name": "Down",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "02cec90c-3a7a-4a73-b281-7b04f2ffd3f9",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Double",
                     "processors": "",
                     "interactions": ""
                 },
                 {
                     "name": "Left",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "78cbb5b4-8ab8-4cce-b23c-71c4426822e3",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Double",
                     "processors": "",
                     "interactions": ""
                 },
                 {
                     "name": "Right",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "1914c769-6a88-4deb-aac5-7ade7ee3ba9d",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Double",
                     "processors": "",
                     "interactions": ""
                 },
