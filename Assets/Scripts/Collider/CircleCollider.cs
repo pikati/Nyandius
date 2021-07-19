@@ -12,6 +12,11 @@ public class CircleCollider : MonoBehaviour
     public Vector2 Center => center;
     public float Radius => radius;
 
+    private void Start()
+    {
+        Singleton<GameManager>.Instance.RegisterCollider(this);
+    }
+
     void Update()
     {
 
