@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UniRx;
-using System;
 
 public class Collider :MonoBehaviour
 {
@@ -12,16 +10,14 @@ public class Collider :MonoBehaviour
     private void Start()
     {
         Initialize();
-        colliderManager = GameObject.Find("GameManager").GetComponent<GameManager>().GetColliderManager();
+        var a = GameObject.Find("GameManager");
+        var b = a.GetComponent<GameManager>();
+        colliderManager = b.GetColliderManager();
     }
 
     private void Update()
     {
         UpdateFrame();
-        colliderManager.OnCollision.Subscribe(col =>
-        {
-            character.OnCollision(col);
-        });
 
     }
     protected virtual void Initialize()

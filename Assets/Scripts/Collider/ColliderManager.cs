@@ -1,21 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UniRx;
-using System;
 
 public class ColliderManager
 {
     private List<CircleCollider> circleColliders;
     private List<RectCollider> rectColliders;
-
-    private Subject<Collider> collisionSub = new Subject<Collider>();
-
-    public IObservable<Collider> OnCollision
-    { 
-        get { return collisionSub; }
-    }
-
     public ColliderManager()
     {
         circleColliders = new List<CircleCollider>();
@@ -41,6 +31,13 @@ public class ColliderManager
                 CircleToRect(c, r);
             }
         }
+        for(int i = 0; i < rectColliders.Count; i++)
+        {
+            for(int j = i + 1; j < rectColliders.Count; j++)
+            {
+                RectToRect(rectColliders[i], rectColliders[j]);
+            }
+        }
     }
 
     private void CircleToRect(CircleCollider c, RectCollider r)
@@ -57,8 +54,37 @@ public class ColliderManager
         float distSq = dx * dx + dy * dy;
         if(distSq <= rad * rad)
         {
-            collisionSub.OnNext(r.GetComponent<Collider>());
-            collisionSub.OnNext(c.GetComponent<Collider>());
+            c.GetCharacter().OnCollision(r);
+            r.GetCharacter().OnCollision(c);
         }
+    }
+
+    private void RectToRect(RectCollider r1, RectCollider r2)
+    {
+        Vector2 min1 = new Vector2(r1.transform.position.x, r1.transform.position.y) + r1.Center + r1.Min;
+        Vector2 min2 = new Vector2(r2.transform.position.x, r2.transform.position.y) + r2.Center + r2.Min;
+        Vector2 max1 = new Vector2(r1.transform.position.x, r1.transform.position.y) + r1.Center + r1.Max;
+        Vector2 max2 = new Vector2(r2.transform.position.x, r2.transform.position.y) + r2.Center + r2.Max;
+		if (min1.x > max2.x)
+		{
+			return;
+		}
+
+		if (max1.x < min2.x)
+		{
+			return;
+		}
+
+		if (min1.y > max2.y)
+		{
+			return;
+		}
+
+		if (max1.y < min2.y)
+		{
+			return;
+		}
+        r1.GetCharacter().OnCollision(r2);
+        r2.GetCharacter().OnCollision(r1);
     }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mike : Character
+public class Rat : Character
 {
     protected override void Initialize()
     {
@@ -16,9 +16,9 @@ public class Mike : Character
 
     public override void OnCollision(Collider col)
     {
-        if(col.CompareTag("Enemy"))
+        if (col.CompareTag("Player"))
         {
-            Debug.Log("“G");
+            Debug.Log("p");
         }
     }
 }

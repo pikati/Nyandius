@@ -6,7 +6,7 @@ public class GameManager : Singleton<GameManager>
 {
     private ColliderManager colliderManager;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         colliderManager = new ColliderManager();
     }
