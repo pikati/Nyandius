@@ -463,7 +463,7 @@ GameObject:
   - component: {fileID: 898005648}
   - component: {fileID: 898005647}
   - component: {fileID: 898005646}
-  - component: {fileID: 898005650}
+  - component: {fileID: 898005649}
   m_Layer: 0
   m_Name: Mike_Idol1
   m_TagString: Untagged
@@ -555,7 +555,7 @@ Transform:
   m_Father: {fileID: 1974725188}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &898005650
+--- !u!114 &898005649
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -564,7 +564,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 898005645}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c155a7c98dcf7c6429170fcf969f4fa6, type: 3}
+  m_Script: {fileID: 11500000, guid: c6011ba12fb29ed4aad58b03bb132f63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1049904525
