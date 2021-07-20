@@ -5,6 +5,7 @@ using UnityEditor;
 
 public class CircleColliderDrawer : MonoBehaviour
 {
+#if UNITY_EDITOR
     [DrawGizmo(GizmoType.NonSelected | GizmoType.Selected)]
     private static void DrawPointGizmos(CircleCollider col, GizmoType gizmoType)
     {
@@ -20,5 +21,5 @@ public class CircleColliderDrawer : MonoBehaviour
         Vector2 center = new Vector2(col.transform.position.x, col.transform.position.y) + col.Center;
         Gizmos.DrawWireSphere(center, col.Radius);
     }
-
+#endif
 }

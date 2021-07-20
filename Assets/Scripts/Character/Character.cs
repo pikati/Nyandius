@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Character : MonoBehaviour
+public class Character : Behaviour
 {
     public enum CharacterState
     {
@@ -13,23 +13,12 @@ public class Character : MonoBehaviour
 
     protected CharacterState cState = CharacterState.Move;
     public CharacterState CState => cState;
-    protected Collider myCollider;
-    private void Start()
-    {
-        myCollider = GetComponent<Collider>();
-        Initialize();
-    }
-
-    private void Update()
-    {
-        UpdateFrame();
-    }
-    protected virtual void Initialize()
+    protected override void Initialize()
     {
 
     }
 
-    protected virtual void UpdateFrame()
+    protected override void UpdateFrame()
     {
 
     }
@@ -47,10 +36,5 @@ public class Character : MonoBehaviour
     protected virtual void ChangeCharacterState(CharacterState state)
     {
         cState = state;
-    }
-
-    public virtual void OnCollision(Collider col)
-    {
-
     }
 }

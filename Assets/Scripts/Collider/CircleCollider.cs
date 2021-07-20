@@ -12,13 +12,14 @@ public class CircleCollider : Collider
     public float Radius => radius;
     protected override void Initialize()
     {
+        CType = ColliderType.Circle;
         base.Initialize();
         Singleton<GameManager>.Instance.RegisterCollider(this);
     }
 
-    public Character GetCharacter()
+    public Behaviour GetBehaviour()
     {
-        return character;
+        return behaviour;
     }
 }
 

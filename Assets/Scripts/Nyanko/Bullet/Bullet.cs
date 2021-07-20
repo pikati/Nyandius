@@ -2,33 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public abstract class Bullet : Behaviour
 {
-    protected float speed = 1.0f;
+    protected Bullet()
+    {
+
+    }
+    protected float speed = 0.1f;
     protected bool isPlayer = true;
     protected bool canPierce = false;
-    protected Collider myCollider;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        myCollider = GetComponent<Collider>();
-        Initialzie();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        UpdateFrame();
-    }
-
-    protected virtual void Initialzie()
+    protected override void Initialize()
     {
 
     }
 
-    protected virtual void UpdateFrame()
+    protected override void UpdateFrame()
     {
 
     }
+
+    void OnBecameInvisible()
+    {
+        DestroyThis();
+    }
+
+    protected abstract void Move();
 }

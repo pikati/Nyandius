@@ -16,12 +16,13 @@ public class RectCollider : Collider
 
     protected override void Initialize()
     {
+        CType = ColliderType.Rect;
         base.Initialize();
         Singleton<GameManager>.Instance.RegisterCollider(this);
     }
 
-    public Character GetCharacter()
+    public Behaviour GetBehaviour()
     {
-        return character;
+        return behaviour;
     }
 }

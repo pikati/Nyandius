@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Mike : Character
 {
+    private Shooter shooter = new Shooter();
     private GameTimer animTimer = new GameTimer(0.5f);
     protected override void Initialize()
     {
@@ -28,6 +29,7 @@ public class Mike : Character
 
     protected override void Attack()
     {
+        shooter.ShotBullet(transform.position);
         ChangeCharacterState(CharacterState.Attack);
         animTimer.ResetTimer(0.5f);
     }

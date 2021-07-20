@@ -54,8 +54,8 @@ public class ColliderManager
         float distSq = dx * dx + dy * dy;
         if(distSq <= rad * rad)
         {
-            c.GetCharacter().OnCollision(r);
-            r.GetCharacter().OnCollision(c);
+            c.GetBehaviour().OnCollision(r);
+            r.GetBehaviour().OnCollision(c);
         }
     }
 
@@ -84,7 +84,43 @@ public class ColliderManager
 		{
 			return;
 		}
-        r1.GetCharacter().OnCollision(r2);
-        r2.GetCharacter().OnCollision(r1);
+        r1.GetBehaviour().OnCollision(r2);
+        r2.GetBehaviour().OnCollision(r1);
+    }
+
+    public void DeleteCollider(Collider col)
+    {
+        if (col.CType == ColliderType.Circle)
+        {
+            List<CircleCollider> tmp = new List<CircleCollider>();
+            foreach (CircleCollider cc in circleColliders)
+            {
+                tmp.Add(cc);
+            }
+            foreach (CircleCollider cc in tmp)
+            {
+                if (cc.ID == col.ID)
+                {
+                    circleColliders.Remove(cc);
+                    return;
+                }
+            }
+        }
+        else
+        {
+            List<RectCollider> tmp = new List<RectCollider>();
+            foreach (RectCollider rc in rectColliders)
+            {
+                tmp.Add(rc);
+            }
+            foreach (RectCollider rc in tmp)
+            {
+                if (rc.ID == col.ID)
+                {
+                    rectColliders.Remove(rc);
+                    return;
+                }
+            }
+        }
     }
 }

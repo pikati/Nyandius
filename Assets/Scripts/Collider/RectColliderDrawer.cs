@@ -5,6 +5,7 @@ using UnityEditor;
 
 public class RectColliderDrawer : MonoBehaviour
 {
+#if UNITY_EDITOR
     [DrawGizmo(GizmoType.NonSelected | GizmoType.Selected)]
     private static void DrawPointGizmos(RectCollider col, GizmoType gizmoType)
     {
@@ -25,4 +26,5 @@ public class RectColliderDrawer : MonoBehaviour
         Gizmos.DrawLine(new Vector3(col.Max.x + center.x, col.Min.y + center.y, 0), new Vector3(col.Max.x + center.x, col.Max.y + center.y, 0));
 
     }
+#endif
 }
