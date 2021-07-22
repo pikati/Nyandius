@@ -8,7 +8,7 @@ public enum ColliderType
     Rect
 };
 
-public class Collider :MonoBehaviour
+public class Collider : Behaviour
 {
     
     static int n = 0;

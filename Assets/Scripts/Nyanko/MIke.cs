@@ -42,7 +42,7 @@ public class Mike : Character
 
     public override void OnCollision(Collider col)
     {
-        if(col.CompareTag("Enemy"))
+        if(col.CompareTag("Enemy") || col.CompareTag("Ground"))
         {
             Damage();
         }
