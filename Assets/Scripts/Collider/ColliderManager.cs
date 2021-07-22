@@ -24,18 +24,28 @@ public class ColliderManager
 
     public void UpdateCollision()
     {
-        foreach (CircleCollider c in circleColliders)
+        List<CircleCollider> tmpc = new List<CircleCollider>();
+        foreach (CircleCollider cc in circleColliders)
         {
-            foreach (RectCollider r in rectColliders)
+            tmpc.Add(cc);
+        }
+        List<RectCollider> tmpr = new List<RectCollider>();
+        foreach (RectCollider rc in rectColliders)
+        {
+            tmpr.Add(rc);
+        }
+        foreach (CircleCollider c in tmpc)
+        {
+            foreach (RectCollider r in tmpr)
             {
                 CircleToRect(c, r);
             }
         }
-        for(int i = 0; i < rectColliders.Count; i++)
+        for(int i = 0; i < tmpr.Count; i++)
         {
-            for(int j = i + 1; j < rectColliders.Count; j++)
+            for(int j = i + 1; j < tmpr.Count; j++)
             {
-                RectToRect(rectColliders[i], rectColliders[j]);
+                RectToRect(tmpr[i], tmpr[j]);
             }
         }
     }
