@@ -8,9 +8,8 @@ public abstract class Bullet : Behaviour
     {
 
     }
-    protected float speed = 0.1f;
-    protected bool isPlayer = true;
-    protected bool canPierce = false;
+    protected float _speed = 0.1f;
+    protected bool _canPierce = false;
     protected override void Initialize()
     {
 

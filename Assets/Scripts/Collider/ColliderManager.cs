@@ -4,33 +4,33 @@ using UnityEngine;
 
 public class ColliderManager
 {
-    private List<CircleCollider> circleColliders;
-    private List<RectCollider> rectColliders;
+    private List<CircleCollider> _circleColliders;
+    private List<RectCollider> _rectColliders;
     public ColliderManager()
     {
-        circleColliders = new List<CircleCollider>();
-        rectColliders = new List<RectCollider>();
+        _circleColliders = new List<CircleCollider>();
+        _rectColliders = new List<RectCollider>();
     }
 
     public void RegisterCollider(CircleCollider col)
     {
-        circleColliders.Add(col);
+        _circleColliders.Add(col);
     }
 
     public void RegisterCollider(RectCollider col)
     {
-        rectColliders.Add(col);
+        _rectColliders.Add(col);
     }
 
     public void UpdateCollision()
     {
         List<CircleCollider> tmpc = new List<CircleCollider>();
-        foreach (CircleCollider cc in circleColliders)
+        foreach (CircleCollider cc in _circleColliders)
         {
             tmpc.Add(cc);
         }
         List<RectCollider> tmpr = new List<RectCollider>();
-        foreach (RectCollider rc in rectColliders)
+        foreach (RectCollider rc in _rectColliders)
         {
             tmpr.Add(rc);
         }
@@ -103,7 +103,7 @@ public class ColliderManager
         if (col.CType == ColliderType.Circle)
         {
             List<CircleCollider> tmp = new List<CircleCollider>();
-            foreach (CircleCollider cc in circleColliders)
+            foreach (CircleCollider cc in _circleColliders)
             {
                 tmp.Add(cc);
             }
@@ -111,7 +111,7 @@ public class ColliderManager
             {
                 if (cc.ID == col.ID)
                 {
-                    circleColliders.Remove(cc);
+                    _circleColliders.Remove(cc);
                     return;
                 }
             }
@@ -119,7 +119,7 @@ public class ColliderManager
         else
         {
             List<RectCollider> tmp = new List<RectCollider>();
-            foreach (RectCollider rc in rectColliders)
+            foreach (RectCollider rc in _rectColliders)
             {
                 tmp.Add(rc);
             }
@@ -127,7 +127,7 @@ public class ColliderManager
             {
                 if (rc.ID == col.ID)
                 {
-                    rectColliders.Remove(rc);
+                    _rectColliders.Remove(rc);
                     return;
                 }
             }

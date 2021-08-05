@@ -5,14 +5,14 @@ using UnityEngine;
 public class RectCollider : Collider
 {
     [SerializeField]
-    private Vector2 center;
+    private Vector2 _center;
     [SerializeField]
-    private Vector2 max;
+    private Vector2 _max;
     [SerializeField]
-    private Vector2 min;
-    public Vector2 Center => center;
-    public Vector2 Max => max;
-    public Vector2 Min => min;
+    private Vector2 _min;
+    public Vector2 Center => _center;
+    public Vector2 Max => _max;
+    public Vector2 Min => _min;
 
     protected override void Initialize()
     {
@@ -23,6 +23,6 @@ public class RectCollider : Collider
 
     public Behaviour GetBehaviour()
     {
-        return behaviour;
+        return _behaviour;
     }
 }

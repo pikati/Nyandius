@@ -5,11 +5,11 @@ using UnityEngine;
 public class CircleCollider : Collider
 {
     [SerializeField]
-    private Vector2 center;
+    private Vector2 _center;
     [SerializeField]
-    private float radius;
-    public Vector2 Center => center;
-    public float Radius => radius;
+    private float _radius;
+    public Vector2 Center => _center;
+    public float Radius => _radius;
     protected override void Initialize()
     {
         CType = ColliderType.Circle;
@@ -19,7 +19,7 @@ public class CircleCollider : Collider
 
     public Behaviour GetBehaviour()
     {
-        return behaviour;
+        return _behaviour;
     }
 }
 

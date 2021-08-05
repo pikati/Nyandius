@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class Character : Behaviour
 {
-    public enum CharacterState
-    {
-        Move,
-        Attack,
-        Damage
-    };
-
-    protected CharacterState cState = CharacterState.Move;
-    public CharacterState CState => cState;
+    protected CharacterState _characterState = CharacterState.Move;
+    protected BulletType _bulletType;
+    protected IDamageApplicable _damageApplcable;
+    protected ICharacterAttack _characterAttack;
+    protected int _hp = -1;
     protected override void Initialize()
     {
 
@@ -33,8 +29,15 @@ public class Character : Behaviour
 
     }
 
-    protected virtual void ChangeCharacterState(CharacterState state)
+    protected virtual void ChangeCharacterState(CharacterState state, ICharacterAnimation animation)
     {
-        cState = state;
+        if (state == _characterState) return;
+        _characterState = state;
+        animation.ChangeAnimation(state);
+    }
+
+    protected virtual void ChangeBulletType(BulletType type)
+    {
+        _bulletType = type;
     }
 }

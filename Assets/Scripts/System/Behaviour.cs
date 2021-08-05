@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Behaviour : MonoBehaviour
 {
-    protected Collider myColider;
+    protected Collider _myColider;
     // Start is called before the first frame update
     void Start()
     {
-        myColider = GetComponent<Collider>();
+        _myColider = GetComponent<Collider>();
         Initialize();
     }
 
@@ -30,7 +30,7 @@ public class Behaviour : MonoBehaviour
 
     protected virtual void DestroyThis()
     {
-        myColider.DeleteCollider();
+        _myColider.DeleteCollider();
         Destroy(gameObject);
     }
 

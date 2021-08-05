@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBullet : MonoBehaviour
+public interface IDamageApplicable
 {
-    
+    public void ApplyDamage(in int damage);
 }

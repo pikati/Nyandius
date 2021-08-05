@@ -12,8 +12,8 @@ public class Collider : Behaviour
 {
     
     static int n = 0;
-    protected Behaviour behaviour;
-    ColliderManager colliderManager;
+    protected Behaviour _behaviour;
+    ColliderManager _colliderManager;
     public int ID { get; private set; } = 0;
     public ColliderType CType { get; protected set; } = ColliderType.Circle;
 
@@ -22,7 +22,7 @@ public class Collider : Behaviour
     {
         Initialize();
         ID = n++;
-        colliderManager = GameObject.Find("GameManager").GetComponent<GameManager>().GetColliderManager();
+        _colliderManager = GameObject.Find("GameManager").GetComponent<GameManager>().GetColliderManager();
     }
 
     private void Update()
@@ -32,7 +32,7 @@ public class Collider : Behaviour
     }
     protected virtual void Initialize()
     {
-        behaviour = GetComponent<Behaviour>();
+        _behaviour = GetComponent<Behaviour>();
     }
 
     protected virtual void UpdateFrame()
@@ -42,6 +42,6 @@ public class Collider : Behaviour
 
     public void DeleteCollider()
     {
-        colliderManager.DeleteCollider(this);
+        _colliderManager.DeleteCollider(this);
     }
 }
