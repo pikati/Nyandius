@@ -9,6 +9,14 @@ public class Character : Behaviour
     protected IDamageApplicable _damageApplcable;
     protected ICharacterAttack _characterAttack;
     protected int _hp = -1;
+    public bool IsDead
+    {
+        get
+        {
+            return _hp <= 0 ? true : false;
+        }
+    }
+
     protected override void Initialize()
     {
 

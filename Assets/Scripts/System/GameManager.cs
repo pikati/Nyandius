@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
+    public PowerUpManager PowerUpManager { get; private set; }
     private ColliderManager colliderManager;
+
     // Start is called before the first frame update
     void Awake()
     {
         colliderManager = new ColliderManager();
+        PowerUpManager = new PowerUpManager();
     }
 
     // Update is called once per frame
     void Update()
     {
         colliderManager.UpdateCollision();
+        PowerUpManager.Update();
     }
 
     public void RegisterCollider(CircleCollider c)
@@ -30,5 +34,10 @@ public class GameManager : Singleton<GameManager>
     public ColliderManager GetColliderManager()
     {
         return colliderManager;
+    }
+
+    private void OnDestroy()
+    {
+        PowerUpManager.Destory();   
     }
 }

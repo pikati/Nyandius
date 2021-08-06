@@ -12,6 +12,7 @@ public class Mike : Character, IDamageApplicable
     private GameTimer _animTimer = new GameTimer(0.5f);
     protected override void Initialize()
     {
+        _hp = 1;
         base.Initialize();
         _characterAttack = GetComponent<ICharacterAttack>();
         var a = transform.GetChild(0);
@@ -60,10 +61,14 @@ public class Mike : Character, IDamageApplicable
     public void ApplyDamage(in int damage)
     {
         //バリアあるとき
-
+        //バリアクラスのhp減らす
         //バリアないとき
-        DestroyThis();
-        //死亡エフェクト
-
+        _hp -= damage;
+        
+        if(IsDead)
+        {
+            //死亡エフェクト
+            DestroyThis();
+        }
     }
 }
