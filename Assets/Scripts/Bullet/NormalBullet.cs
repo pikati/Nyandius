@@ -5,15 +5,6 @@ using UnityEngine;
 public class NormalBullet : Bullet
 {
 
-    protected override void Initialize()
-    {
-        
-    }
-    protected override void UpdateFrame()
-    {
-        Move();
-    }
-
     protected override void Move()
     {
         transform.position += new Vector3(_speed + Time.deltaTime, 0, 0);

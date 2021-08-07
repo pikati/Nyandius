@@ -8,6 +8,9 @@ public class Mike : Character, IDamageApplicable
     private PlayerCore _playerCore = new PlayerCore();
     private ICharacterAnimation _playerAnimation;
     private IPlayerInputEventProvider _playerInputEventPorvider;
+    private Missiler _missiler;
+    private readonly int _shooterMax = 4;
+    private Vector3[] _shooterPosition;
     
     private GameTimer _animTimer = new GameTimer(0.5f);
     protected override void Initialize()
@@ -18,7 +21,14 @@ public class Mike : Character, IDamageApplicable
         var a = transform.GetChild(0);
         _playerAnimation = a.GetComponent<ICharacterAnimation>();
         _playerInputEventPorvider = GetComponent<IPlayerInputEventProvider>();
+        _missiler = Singleton<Missiler>.Instance;
+        _missiler.ShooterNum++;
         _bulletType = BulletType.Normal;
+        _shooterPosition = new Vector3[_shooterMax];
+        for(int i = 0; i < _shooterMax; i++)
+        {
+            _shooterPosition[i].z = -1;
+        }
     }
 
     protected override void UpdateFrame()
@@ -35,11 +45,19 @@ public class Mike : Character, IDamageApplicable
                 _animTimer.ResetTimer(0.5f);
             }
         }
+        UpdateShooterPosition();
     }
 
     protected override void Attack()
     {
         _characterAttack.Attack(transform.position, _bulletType);
+        for(int i = 0; i < _shooterMax; i++)
+        {
+            if(_shooterPosition[i].z != -1 && _missiler.CanShotMissile)
+            {
+                _characterAttack.Attack(new Vector2(_shooterPosition[i].x, _shooterPosition[i].y), BulletType.Missile);
+            }
+        }
         ChangeCharacterState(CharacterState.Attack, _playerAnimation);
         _animTimer.ResetTimer(0.5f);
     }
@@ -70,5 +88,10 @@ public class Mike : Character, IDamageApplicable
             //死亡エフェクト
             DestroyThis();
         }
+    }
+
+    private void UpdateShooterPosition()
+    {
+        _shooterPosition[0] = transform.position;
     }
 }

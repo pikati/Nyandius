@@ -11,7 +11,6 @@ public class CircleColliderDrawer : MonoBehaviour
     {
         Color color = Color.green;
 
-        // 選択されていないときの場合は、色をタイプごと変えてみたよ。
         if ((gizmoType & GizmoType.NonSelected) != 0)
         {
             color = Color.white;

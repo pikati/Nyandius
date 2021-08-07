@@ -1,7 +1,7 @@
 public enum BulletType
 {
     Normal,
-    Lazer,
     Missile,
+    Lazer,
     End
 };

@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public abstract class Bullet : Behaviour
 {
     protected Bullet()
@@ -17,10 +13,10 @@ public abstract class Bullet : Behaviour
 
     protected override void UpdateFrame()
     {
-
+        Move();
     }
 
-    void OnBecameInvisible()
+    protected virtual void OnBecameInvisible()
     {
         DestroyThis();
     }
