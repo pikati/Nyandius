@@ -108,5 +108,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bffd8556d0745d4e8b64f43062b0949, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  center: {x: 0, y: 0}
-  radius: 0.15
+  _center: {x: 0, y: 0}
+  _radius: 0.2

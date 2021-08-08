@@ -30,12 +30,12 @@ public class Collider : Behaviour
         UpdateFrame();
 
     }
-    protected virtual void Initialize()
+    protected override void Initialize()
     {
         _behaviour = GetComponent<Behaviour>();
     }
 
-    protected virtual void UpdateFrame()
+    protected override void UpdateFrame()
     {
 
     }

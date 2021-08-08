@@ -17,11 +17,7 @@ public class Missile : Bullet
 
     protected override void Move()
     {
-        if (_isCollisionGround)
-        {
-            _direction = new Vector2(1.0f, 0);
-        }
-        else
+        if (!_isCollisionGround)
         {
             _direction = new Vector2(1.0f, -1.0f);
         }
@@ -34,6 +30,7 @@ public class Missile : Bullet
         if (col.CompareTag("Ground"))
         {
             _isCollisionGround = true;
+            _direction = new Vector2(1.0f, 0);
             //êiçsï˚å¸â°
         }
         else if (col.CompareTag("Enemy"))

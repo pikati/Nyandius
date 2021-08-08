@@ -50,7 +50,7 @@ public class Mike : Character, IDamageApplicable
 
     protected override void Attack()
     {
-        _characterAttack.Attack(transform.position, _bulletType);
+        //_characterAttack.Attack(transform.position, _bulletType);
         for(int i = 0; i < _shooterMax; i++)
         {
             if(_shooterPosition[i].z != -1 && _missiler.CanShotMissile)
@@ -68,13 +68,13 @@ public class Mike : Character, IDamageApplicable
         _animTimer.ResetTimer(0.5f);
     }
 
-    //public override void OnCollision(Collider col)
-    //{
-    //    if(col.CompareTag("Enemy") || col.CompareTag("Ground"))
-    //    {
-    //        Damage();
-    //    }
-    //}
+    public override void OnCollision(Collider col)
+    {
+        if (col.CompareTag("Enemy") || col.CompareTag("Ground"))
+        {
+            Damage();
+        }
+    }
 
     public void ApplyDamage(in int damage)
     {

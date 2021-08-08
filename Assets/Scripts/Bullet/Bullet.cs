@@ -6,10 +6,6 @@ public abstract class Bullet : Behaviour
     }
     protected float _speed = 0.1f;
     protected bool _canPierce = false;
-    protected override void Initialize()
-    {
-
-    }
 
     protected override void UpdateFrame()
     {
