@@ -11,6 +11,7 @@ public class Mike : Character, IDamageApplicable
     private Missiler _missiler;
     private readonly int _shooterMax = 4;
     private Vector3[] _shooterPosition;
+    public bool IsActiveDoubler { get; set; } = false;
     
     private GameTimer _animTimer = new GameTimer(0.5f);
     protected override void Initialize()
@@ -50,8 +51,12 @@ public class Mike : Character, IDamageApplicable
 
     protected override void Attack()
     {
-        //_characterAttack.Attack(transform.position, _bulletType);
-        for(int i = 0; i < _shooterMax; i++)
+        _characterAttack.Attack(transform.position, _bulletType);
+        if(IsActiveDoubler)
+        {
+            _characterAttack.Attack(transform.position + new Vector3(0, 0.4f, 0), _bulletType);
+        }
+        for (int i = 0; i < _shooterMax; i++)
         {
             if(_shooterPosition[i].z != -1 && _missiler.CanShotMissile)
             {

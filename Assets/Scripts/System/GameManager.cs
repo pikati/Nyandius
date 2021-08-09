@@ -14,6 +14,11 @@ public class GameManager : Singleton<GameManager>
         PowerUpManager = new PowerUpManager();
     }
 
+    private void Start()
+    {
+        PowerUpManager.SetPlayer(GameObject.FindGameObjectWithTag("Player").GetComponent<Mike>());
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -34,6 +39,11 @@ public class GameManager : Singleton<GameManager>
     public ColliderManager GetColliderManager()
     {
         return colliderManager;
+    }
+
+    public bool IsActiveDouble()
+    {
+        return PowerUpManager.GetDoubler().ValidDoubler;
     }
 
     private void OnDestroy()
