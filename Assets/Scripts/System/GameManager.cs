@@ -41,11 +41,6 @@ public class GameManager : Singleton<GameManager>
         return colliderManager;
     }
 
-    public bool IsActiveDouble()
-    {
-        return PowerUpManager.GetDoubler().ValidDoubler;
-    }
-
     private void OnDestroy()
     {
         PowerUpManager.Destory();   

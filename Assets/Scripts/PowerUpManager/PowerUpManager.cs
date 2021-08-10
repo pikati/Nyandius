@@ -8,17 +8,18 @@ public class PowerUpManager
     private readonly int _maxPower = 6;
     private Speeder _speeder;
     private Missiler _missiler;
-    private Doubler _doubler = new Doubler();
-    private Mike _mike;
+    private Character _mike;
     public void Update()
     {
         if(Singleton<InputController>.Instance.Y)
         {
-            _speeder.SpeedUp();
-            _missiler.ValidMissiler = true;
-            _doubler.ActivateDoubler();
-            _mike.IsActiveDoubler = true;
+            PowerUp();
         }
+        if(Singleton<InputController>.Instance.X)
+        {
+            GetPowerUp();
+        }
+        Debug.Log(_powerNum);
     }
 
     public void Destory()
@@ -36,13 +37,43 @@ public class PowerUpManager
         _missiler = missiler;
     }
 
-    public Doubler GetDoubler()
-    {
-        return _doubler;
-    }
-
     public void SetPlayer(Mike mike)
     {
         _mike = mike;
+    }
+
+    public void GetPowerUp()
+    {
+        _powerNum++;
+        if(_powerNum > _maxPower)
+        {
+            _powerNum = 1;
+        }
+    }
+
+    private void PowerUp()
+    {
+        switch (_powerNum)
+        {
+            case 1:
+                _speeder.SpeedUp();
+                _powerNum = 0;
+                break;
+            case 2:
+                _missiler.ValidMissiler = true;
+                _powerNum = 0;
+                break;
+            case 3:
+                _mike.ChangeBulletType(BulletType.Double);
+                _powerNum = 0;
+                break;
+            case 4:
+                _mike.ChangeBulletType(BulletType.Lazer);
+                _powerNum = 0;
+                break;
+            default:
+                break;
+        }
+
     }
 }

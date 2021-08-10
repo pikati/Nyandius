@@ -52,10 +52,6 @@ public class Mike : Character, IDamageApplicable
     protected override void Attack()
     {
         _characterAttack.Attack(transform.position, _bulletType);
-        if(IsActiveDoubler)
-        {
-            _characterAttack.Attack(transform.position + new Vector3(0, 0.4f, 0), _bulletType);
-        }
         for (int i = 0; i < _shooterMax; i++)
         {
             if(_shooterPosition[i].z != -1 && _missiler.CanShotMissile)

@@ -13,6 +13,8 @@ public class BulletManager : Singleton<BulletManager>
     {
         _bullets.Add(Resources.Load("Bullet/BulletNormal") as GameObject);
         _bullets.Add(Resources.Load("Bullet/BulletMissile") as GameObject);
+        _bullets.Add(Resources.Load("Bullet/BulletLazer") as GameObject);
+        _bullets.Add(Resources.Load("Bullet/BulletUp") as GameObject);
     }
 
     public void CreateBullet(BulletType type, Vector3 pos)

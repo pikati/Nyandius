@@ -44,7 +44,7 @@ public class Character : Behaviour
         animation.ChangeAnimation(state);
     }
 
-    protected virtual void ChangeBulletType(BulletType type)
+    public virtual void ChangeBulletType(BulletType type)
     {
         _bulletType = type;
     }

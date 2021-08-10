@@ -16,7 +16,6 @@ public class Behaviour : MonoBehaviour
     void Update()
     {
         UpdateFrame();
-        Debug.Log(_myColider.gameObject.name);
     }
 
     protected virtual void Initialize()
