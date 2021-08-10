@@ -9,6 +9,7 @@ public class Mike : Character, IDamageApplicable
     private ICharacterAnimation _playerAnimation;
     private IPlayerInputEventProvider _playerInputEventPorvider;
     private Missiler _missiler;
+    private Barrier _barrier;
     private readonly int _shooterMax = 4;
     private Vector3[] _shooterPosition;
     public bool IsActiveDoubler { get; set; } = false;
@@ -22,6 +23,7 @@ public class Mike : Character, IDamageApplicable
         var a = transform.GetChild(0);
         _playerAnimation = a.GetComponent<ICharacterAnimation>();
         _playerInputEventPorvider = GetComponent<IPlayerInputEventProvider>();
+        _barrier = GetComponent<Barrier>();
         _missiler = Singleton<Missiler>.Instance;
         _missiler.ShooterNum++;
         _bulletType = BulletType.Normal;
@@ -47,6 +49,10 @@ public class Mike : Character, IDamageApplicable
             }
         }
         UpdateShooterPosition();
+        if(Singleton<InputController>.Instance.B)
+        {
+            Damage();
+        }
     }
 
     protected override void Attack()
@@ -65,8 +71,17 @@ public class Mike : Character, IDamageApplicable
 
     protected override void Damage()
     {
-        ChangeCharacterState(CharacterState.Damage, _playerAnimation);
-        _animTimer.ResetTimer(0.5f);
+        if(_barrier.IsActiveBarrier())
+        {
+            _barrier.DamageBarrier();
+        }
+        else
+        {
+            ChangeCharacterState(CharacterState.Damage, _playerAnimation);
+            _playerCore.Dead();
+            _animTimer.ResetTimer(0.5f);
+        }
+        
     }
 
     public override void OnCollision(Collider col)
