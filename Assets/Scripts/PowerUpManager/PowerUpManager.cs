@@ -9,7 +9,7 @@ public class PowerUpManager
     private Speeder _speeder;
     private Missiler _missiler;
     private Barrier _barrier;
-    private Character _mike;
+    private Mike _mike;
     public void Update()
     {
         if(Singleton<InputController>.Instance.Y)
@@ -66,18 +66,24 @@ public class PowerUpManager
                 _powerNum = 0;
                 break;
             case 2:
-                _missiler.ValidMissiler = true;
+                _missiler.ActiveMissiler = true;
                 _powerNum = 0;
                 break;
             case 3:
                 _mike.ChangeBulletType(BulletType.Double);
+                _mike.SetOptionBulletType(BulletType.Double);
                 _powerNum = 0;
                 break;
             case 4:
                 _mike.ChangeBulletType(BulletType.Lazer);
+                _mike.SetOptionBulletType(BulletType.Lazer);
                 _powerNum = 0;
                 break;
             case 5:
+                _mike.ActivateOption();
+                _powerNum = 0;
+                break;
+            case 6:
                 _barrier.ActivateBarrier();
                 _powerNum = 0;
                 break;

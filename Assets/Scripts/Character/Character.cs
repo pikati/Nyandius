@@ -27,11 +27,6 @@ public class Character : Behaviour
 
     }
 
-    protected virtual void Damage()
-    {
-
-    }
-
     protected virtual void Attack()
     {
 

@@ -22,10 +22,10 @@ public class Barrier : MonoBehaviour
         _barrierObject.SetActive(true);
     }
 
-    public void DamageBarrier()
+    public void DamageBarrier(in int damage)
     {
         if (_isInvincible) return;
-        _barrierNum--;
+        _barrierNum -= damage;
         ChangeBarrierColor();
         Debug.Log(_barrierNum);
         Invicible(this.GetCancellationTokenOnDestroy()).Forget();

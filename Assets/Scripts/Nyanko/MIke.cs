@@ -1,5 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using UniRx;
 using UnityEngine;
 
 //三毛猫コンポーネント
@@ -9,15 +9,24 @@ public class Mike : Character, IDamageApplicable
     private ICharacterAnimation _playerAnimation;
     private IPlayerInputEventProvider _playerInputEventPorvider;
     private Missiler _missiler;
+    [SerializeField]
+    private Option[] _options;
     private Barrier _barrier;
-    private readonly int _shooterMax = 4;
-    private Vector3[] _shooterPosition;
+    private readonly int _optionMax = 2;
+    private int _activOptionNum = 0;
+    private readonly int _memoryPositionNum = 64;
+    private Vector3[] _oldPosition;
+    private ReactiveProperty<Vector3> _position = new ReactiveProperty<Vector3>();
+    private bool _skipUpdateOldPosition = false;
+
     public bool IsActiveDoubler { get; set; } = false;
-    
+
     private GameTimer _animTimer = new GameTimer(0.5f);
     protected override void Initialize()
     {
-        _hp = 1;
+        _oldPosition = new Vector3[_memoryPositionNum];
+        _position.Value = transform.position;
+        _position.Subscribe(_ => SetOldPosition());
         base.Initialize();
         _characterAttack = GetComponent<ICharacterAttack>();
         var a = transform.GetChild(0);
@@ -27,53 +36,55 @@ public class Mike : Character, IDamageApplicable
         _missiler = Singleton<Missiler>.Instance;
         _missiler.ShooterNum++;
         _bulletType = BulletType.Normal;
-        _shooterPosition = new Vector3[_shooterMax];
-        for(int i = 0; i < _shooterMax; i++)
-        {
-            _shooterPosition[i].z = -1;
-        }
     }
 
     protected override void UpdateFrame()
     {
-        if(_playerInputEventPorvider.OnShot.Value)
+        if (_playerInputEventPorvider.OnShot.Value)
         {
             Attack();
         }
-        if(_characterState != CharacterState.Move)
+        if (_characterState != CharacterState.Move)
         {
-            if(_animTimer.UpdateTimer())
+            if (_animTimer.UpdateTimer())
             {
                 ChangeCharacterState(CharacterState.Move, _playerAnimation);
                 _animTimer.ResetTimer(0.5f);
             }
         }
-        UpdateShooterPosition();
-        if(Singleton<InputController>.Instance.B)
+        SetOldPosition();
+        UpdateOptionPosition();
+        if (Singleton<InputController>.Instance.B)
         {
-            Damage();
+            ApplyDamage();
         }
     }
 
     protected override void Attack()
     {
         _characterAttack.Attack(transform.position, _bulletType);
-        for (int i = 0; i < _shooterMax; i++)
+        for (int i = 0; i < _activOptionNum; i++)
         {
-            if(_shooterPosition[i].z != -1 && _missiler.CanShotMissile)
-            {
-                _characterAttack.Attack(new Vector2(_shooterPosition[i].x, _shooterPosition[i].y), BulletType.Missile);
-            }
+            _options[i].Attack(false);
         }
+        ShotMissile();
         ChangeCharacterState(CharacterState.Attack, _playerAnimation);
         _animTimer.ResetTimer(0.5f);
     }
 
-    protected override void Damage()
+    public override void OnCollision(Collider col)
     {
-        if(_barrier.IsActiveBarrier())
+        if (col.CompareTag("Enemy") || col.CompareTag("Ground"))
         {
-            _barrier.DamageBarrier();
+            ApplyDamage();
+        }
+    }
+
+    public void ApplyDamage(in int damage = 1)
+    {
+        if (_barrier.IsActiveBarrier())
+        {
+            _barrier.DamageBarrier(damage);
         }
         else
         {
@@ -81,33 +92,58 @@ public class Mike : Character, IDamageApplicable
             _playerCore.Dead();
             _animTimer.ResetTimer(0.5f);
         }
-        
-    }
-
-    public override void OnCollision(Collider col)
-    {
-        if (col.CompareTag("Enemy") || col.CompareTag("Ground"))
-        {
-            Damage();
-        }
-    }
-
-    public void ApplyDamage(in int damage)
-    {
-        //バリアあるとき
-        //バリアクラスのhp減らす
-        //バリアないとき
-        _hp -= damage;
-        
-        if(IsDead)
+        if (IsDead)
         {
             //死亡エフェクト
             DestroyThis();
         }
     }
 
-    private void UpdateShooterPosition()
+    public void ActivateOption()
     {
-        _shooterPosition[0] = transform.position;
+        if (_activOptionNum >= _optionMax) return;
+        _options[_activOptionNum++].ActivateOption();
+    }
+
+    public void SetOptionBulletType(BulletType type)
+    {
+        _options[0].SetBulletType(type);
+        _options[1].SetBulletType(type);
+    }
+
+    private void ShotMissile()
+    {
+        if (!_missiler.CanShotMissile) return;
+        if (_missiler.ActiveMissiler)
+        {
+            _characterAttack.Attack(transform.position, BulletType.Missile);
+            for (int i = 0; i < _activOptionNum; i++)
+            {
+                _options[i].Attack(true);
+            }
+        }
+    }
+
+    private void SetOldPosition()
+    {
+        if (_oldPosition[0] == transform.position) return;
+        if(_skipUpdateOldPosition)
+        {
+            _skipUpdateOldPosition = false;
+            return;
+        }
+        for (int i = _memoryPositionNum - 1; i > 0; i--)
+        {
+            _oldPosition[i] = _oldPosition[i - 1];
+        }
+        _oldPosition[0] = transform.position;
+        _skipUpdateOldPosition = true;
+
+    }
+
+    private void UpdateOptionPosition()
+    {
+        _options[0].SetPosition(_oldPosition[_memoryPositionNum / 2]);
+        _options[1].SetPosition(_oldPosition[_memoryPositionNum - 1]);
     }
 }
