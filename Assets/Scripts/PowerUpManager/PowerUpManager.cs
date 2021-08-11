@@ -10,6 +10,7 @@ public class PowerUpManager
     private Missiler _missiler;
     private Barrier _barrier;
     private Mike _mike;
+    private PowerUpModel _powerUpModel;
     public void Update()
     {
         if(Singleton<InputController>.Instance.Y)
@@ -48,6 +49,11 @@ public class PowerUpManager
         _mike = mike;
     }
 
+    public void SetPowerUpModel(PowerUpModel p)
+    {
+        _powerUpModel = p;
+    }
+
     public void GetPowerUp()
     {
         _powerNum++;
@@ -55,6 +61,7 @@ public class PowerUpManager
         {
             _powerNum = 1;
         }
+        _powerUpModel.SetPowerUpNum(_powerNum);
     }
 
     private void PowerUp()
@@ -90,6 +97,6 @@ public class PowerUpManager
             default:
                 break;
         }
-
+        _powerUpModel.SetPowerUpNum(_powerNum);
     }
 }

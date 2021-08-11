@@ -12,6 +12,7 @@ public class GameManager : Singleton<GameManager>
     {
         colliderManager = new ColliderManager();
         PowerUpManager = new PowerUpManager();
+        PowerUpManager.SetPowerUpModel(GameObject.Find("PowerUpModel").GetComponent<PowerUpModel>());
     }
 
     private void Start()
