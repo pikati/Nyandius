@@ -21,7 +21,6 @@ public class PowerUpManager
         {
             GetPowerUp();
         }
-        Debug.Log(_powerNum);
     }
 
     public void Destory()

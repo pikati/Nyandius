@@ -2,23 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Rat : Character
+public class Rat : Enemy
 {
     protected override void Initialize()
     {
+        _score = 100;
+        _hp.Value = 1;
         base.Initialize();
-    }
-
-    protected override void UpdateFrame()
-    {
-        base.UpdateFrame();
-    }
-
-    public override void OnCollision(Collider col)
-    {
-        if (col.CompareTag("Player"))
-        {
-            Debug.Log("p");
-        }
     }
 }

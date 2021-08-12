@@ -1,4 +1,3 @@
-using System;
 using UniRx;
 using UnityEngine;
 
@@ -12,7 +11,7 @@ public class PowerUpPresenter : MonoBehaviour
     private void Start()
     {
         _model.PowerUpNum
-            .Subscribe(x => { _view.SetSelectColor(x); })
+            .Subscribe(x => _view.SetSelectColor(x))
             .AddTo(this);
     }
 }

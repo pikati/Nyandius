@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using UniRx;
 
 public class Character : Behaviour
 {
@@ -8,12 +6,12 @@ public class Character : Behaviour
     protected BulletType _bulletType;
     protected IDamageApplicable _damageApplcable;
     protected ICharacterAttack _characterAttack;
-    protected int _hp = -1;
+    protected IntReactiveProperty _hp = new IntReactiveProperty(-1);
     public bool IsDead
     {
         get
         {
-            return _hp <= 0 ? true : false;
+            return _hp.Value <= 0 ? true : false;
         }
     }
 
@@ -42,5 +40,10 @@ public class Character : Behaviour
     public virtual void ChangeBulletType(BulletType type)
     {
         _bulletType = type;
+    }
+
+    protected virtual void OnDead()
+    {
+
     }
 }
