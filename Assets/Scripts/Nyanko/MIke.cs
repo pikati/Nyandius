@@ -15,7 +15,7 @@ public class Mike : Character, IDamageApplicable
     private readonly int _optionMax = 2;
     private int _activOptionNum = 0;
     private readonly int _memoryPositionNum = 64;
-    private Vector3[] _oldPosition;
+    private Vector3[] _oldPosition;//オプションの座標で利用
     private ReactiveProperty<Vector3> _position = new ReactiveProperty<Vector3>();
     private bool _skipUpdateOldPosition = false;
 
