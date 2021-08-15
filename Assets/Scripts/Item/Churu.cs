@@ -7,7 +7,7 @@ public class Churu : Behaviour
     protected override void Initialize()
     {
         this.UpdateAsObservable()
-            .Subscribe(_ => transform.position += new Vector3(-1.0f, 0, 0) * Time.deltaTime);
+            .Subscribe(_ => transform.position += new Vector3(-1.5f, 0, 0) * Time.deltaTime);
         base.Initialize();
     }
     public override void OnCollision(Collider col)
