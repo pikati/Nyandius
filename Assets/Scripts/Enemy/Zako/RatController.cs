@@ -16,6 +16,6 @@ public class RatController : MonoBehaviour
         Instantiate(_rat, new Vector3(11.0f, height, 0), Quaternion.identity);
         Instantiate(_rat, new Vector3(13.0f, height, 0), Quaternion.identity);
         Instantiate(_rat, new Vector3(15.0f, height, 0), Quaternion.identity);
-        Instantiate(_rat, new Vector3(17.0f, height, 0), Quaternion.identity);
+        Instantiate(_rat, new Vector3(17.0f, height, 0), Quaternion.identity).GetComponent<Enemy>()?.SetItem();
     }
 }

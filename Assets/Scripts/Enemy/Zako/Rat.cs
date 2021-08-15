@@ -19,7 +19,7 @@ public class Rat : Enemy
 
     protected override void Initialize()
     {
-        _score = 100;
+        _score = 200;
         _hp.Value = 1;
         _playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         DefineTask();
@@ -72,11 +72,11 @@ public class Rat : Enemy
     {
         if(transform.position.y < 0)
         {
-            _moveDirection = new Vector3(1.0f, -0.5f, 0);
+            _moveDirection = new Vector3(1.0f, 0.5f, 0);
         }
         else
         {
-            _moveDirection = new Vector3(1.0f, 0.5f, 0);
+            _moveDirection = new Vector3(1.0f, -0.5f, 0);
         }
     }
 

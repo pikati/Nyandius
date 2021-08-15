@@ -7,7 +7,9 @@ public class EnemyCreater : MonoBehaviour
 {
     public enum EnemyPopEnum 
     {
-        Rat
+        Rat,
+        Rabbit,
+        Bird
     }
 
     [System.Serializable]
@@ -23,6 +25,8 @@ public class EnemyCreater : MonoBehaviour
     private int _popIndex = 0;
 
     private RatController _rat;
+    private RabitController _rabbit;
+    private BirdController _bird;
 
     private GameTimer _popTimer;
     
@@ -30,7 +34,10 @@ public class EnemyCreater : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _rat = GameObject.Find("EnemyPopInfomations").GetComponent<RatController>();
+        var popObj = GameObject.Find("EnemyPopInfomations");
+        _rat = popObj.GetComponent<RatController>();
+        _rabbit = popObj.GetComponent<RabitController>();
+        _bird = popObj.GetComponent<BirdController>();
         _popTimer = new GameTimer(_popInfo[_popIndex]._popTime);
         this.UpdateAsObservable()
             .Subscribe(_ => PopEnemy());
@@ -45,7 +52,14 @@ public class EnemyCreater : MonoBehaviour
             case EnemyPopEnum.Rat:
                 _rat.CreateRat(_popInfo[_popIndex]._hegiht);
                 break;
-
+            case EnemyPopEnum.Rabbit:
+                _rabbit.CreateRabbit(_popInfo[_popIndex]._hegiht);
+                break;
+            case EnemyPopEnum.Bird:
+                _bird.CreateBird(_popInfo[_popIndex]._hegiht);
+                break;
+            default:
+                break;
         }
         _popIndex++;
         _popTimer.ResetTimer(_popInfo[_popIndex]._popTime);

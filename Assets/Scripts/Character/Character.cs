@@ -6,12 +6,12 @@ public class Character : Behaviour
     protected BulletType _bulletType;
     protected IDamageApplicable _damageApplcable;
     protected ICharacterAttack _characterAttack;
-    protected IntReactiveProperty _hp = new IntReactiveProperty(-1);
+    protected IntReactiveProperty _hp = new IntReactiveProperty(1);
     public bool IsDead
     {
         get
         {
-            return _hp.Value <= 0 ? true : false;
+            return _hp.Value <= 0;
         }
     }
 
@@ -40,6 +40,11 @@ public class Character : Behaviour
     public virtual void ChangeBulletType(BulletType type)
     {
         _bulletType = type;
+    }
+
+    protected void OnDamage(int damage)
+    {
+        _hp.Value -= damage;
     }
 
     protected virtual void OnDead()

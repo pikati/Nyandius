@@ -89,7 +89,7 @@ public class Mike : Character, IDamageApplicable
         else
         {
             ChangeCharacterState(CharacterState.Damage, _playerAnimation);
-            _playerCore.Dead();
+            OnDamage(damage);
             _animTimer.ResetTimer(0.5f);
         }
         if (IsDead)

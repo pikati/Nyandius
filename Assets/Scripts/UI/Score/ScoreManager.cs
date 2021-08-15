@@ -14,7 +14,7 @@ public class ScoreManager : Singleton<ScoreManager>
 
     public void AddScore(int score)
     {
-        _score.Value = score;
+        _score.Value += score;
     }
 
     public void ResetScore()
