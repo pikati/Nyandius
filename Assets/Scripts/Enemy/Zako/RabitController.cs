@@ -13,7 +13,7 @@ public class RabitController : MonoBehaviour
 
     public void CreateRabbit(float height)
     {
-        Instantiate(_rabbit, new Vector3(11.0f, height + 0.5f, 0), Quaternion.identity);
-        Instantiate(_rabbit, new Vector3(11.0f, height - 0.5f, 0), Quaternion.identity);
+        Instantiate(_rabbit, new Vector3(11.0f, height + 1.0f, 0), Quaternion.identity);
+        Instantiate(_rabbit, new Vector3(11.0f, height - 1.0f, 0), Quaternion.identity);
     }
 }

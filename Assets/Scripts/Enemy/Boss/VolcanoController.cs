@@ -13,15 +13,16 @@ public class VolcanoController : MonoBehaviour
 
     public void CreateVolcano(float height)
     {
+        var q = Quaternion.Euler(0, 0, 0);
         if (height > 0)
         {
-            transform.rotation = Quaternion.Euler(0, 0, 180.0f);
+            q = Quaternion.Euler(0, 0, 180.0f);
             height = 3.8f;
         }
         else
         {
             height = -4.0f;
         }
-        Instantiate(_volcano, new Vector3(11.0f, height, 0), Quaternion.identity);
+        Instantiate(_volcano, new Vector3(11.0f, height, 0), q);
     }
 }

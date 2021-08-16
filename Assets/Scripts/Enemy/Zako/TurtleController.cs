@@ -13,15 +13,16 @@ public class TurtleController : MonoBehaviour
 
     public void CreateTurtle(float height)
     {
+        var q = Quaternion.Euler(0, 0, 0);
         if (height > 0)
         {
-            transform.rotation = Quaternion.Euler(0, 0, 180.0f);
+            q = Quaternion.Euler(0, 0, 180.0f);
             height = 4.5f;
         }
         else
         {
             height = -4.8f;
         }
-        Instantiate(_turtle, new Vector3(11.0f, height, 0), Quaternion.identity);
+        Instantiate(_turtle, new Vector3(11.0f, height, 0), q);
     }
 }

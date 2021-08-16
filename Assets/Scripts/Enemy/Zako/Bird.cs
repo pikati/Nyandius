@@ -13,7 +13,7 @@ public class Bird : Enemy
     TaskList<BirdTask> _task = new TaskList<BirdTask>();
     private Transform _playerTransform;
     private Vector3 _moveDirection;
-    private float _speed = 2.0f;
+    private float _speed = 3.0f;
 
     protected override void Initialize()
     {

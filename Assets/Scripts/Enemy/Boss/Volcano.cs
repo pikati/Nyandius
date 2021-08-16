@@ -17,7 +17,12 @@ public class Volcano : Enemy
     {
         if(_shotTimer.UpdateTimer())
         {
-            Instantiate(_bullet, transform.position, Quaternion.identity).GetComponent<VolcanoBullet>().SetDirection(new Vector3(Random.Range(-2.0f, 2.0f), Random.Range(2.0f,3.5f), 0));
+            var b = Instantiate(_bullet, transform.position, Quaternion.identity).GetComponent<VolcanoBullet>();
+            b.SetDirection(new Vector3(Random.Range(-2.0f, 2.0f), Random.Range(2.0f, 3.5f), 0));
+            if(transform.rotation.z != 0)
+            {
+                b.SetReverse();
+            }
             _shotTimer.ResetTimer(Random.Range(0.5f, 1.0f));
         }
         transform.position += Vector3.left * 1.5f * Time.deltaTime;
