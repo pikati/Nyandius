@@ -11,7 +11,9 @@ public class EnemyCreater : MonoBehaviour
         Rabbit,
         Bird,
         Dog,
-        Turtle
+        Turtle,
+        Volcano,
+        Shark
     }
 
     [System.Serializable]
@@ -31,6 +33,8 @@ public class EnemyCreater : MonoBehaviour
     private BirdController _bird;
     private DogController _dog;
     private TurtleController _turtle;
+    private VolcanoController _volcano;
+    private SharkController _shark;
 
     private GameTimer _popTimer;
     
@@ -44,6 +48,8 @@ public class EnemyCreater : MonoBehaviour
         _bird = popObj.GetComponent<BirdController>();
         _dog = popObj.GetComponent<DogController>();
         _turtle = popObj.GetComponent<TurtleController>();
+        _volcano = popObj.GetComponent<VolcanoController>();
+        _shark = popObj.GetComponent<SharkController>();
         _popTimer = new GameTimer(_popInfo[_popIndex]._popTime);
         this.UpdateAsObservable()
             .Subscribe(_ => PopEnemy());
@@ -69,6 +75,12 @@ public class EnemyCreater : MonoBehaviour
                 break;
             case EnemyPopEnum.Turtle:
                 _turtle.CreateTurtle(_popInfo[_popIndex]._hegiht);
+                break;
+            case EnemyPopEnum.Volcano:
+                _volcano.CreateVolcano(_popInfo[_popIndex]._hegiht);
+                break;
+            case EnemyPopEnum.Shark:
+                _shark.CreateShark(_popInfo[_popIndex]._hegiht);
                 break;
             default:
                 break;

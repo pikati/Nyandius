@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class Turtle : Enemy
 {
-    private enum DogTask
+    private enum TurtleTask
     {
         Attack
     }
-    TaskList<DogTask> _task = new TaskList<DogTask>();
+    TaskList<TurtleTask> _task = new TaskList<TurtleTask>();
     private readonly float _createInterval = 1.5f;
     private GameTimer _createTimer;
     private GameObject _squirrel;
+    private float _maxHP;
 
     protected override void Initialize()
     {
         _score = 800;
         _hp.Value = 6;
+        _maxHP = _hp.Value;
         _createTimer = new GameTimer(_createInterval);
         _squirrel = Resources.Load("Enemy/Squirrel") as GameObject;
         DefineTask();
@@ -43,6 +45,8 @@ public class Turtle : Enemy
             }
         }
         transform.position += Vector3.left * 1.5f * Time.deltaTime;
+        float c = _hp.Value / _maxHP;
+        _spriteRenderer.color = new Color(1, c, c, 1);
         return IsOffScreen() && pos.x < -10.0f;
     }
 
@@ -53,11 +57,11 @@ public class Turtle : Enemy
 
     private void DefineTask()
     {
-        _task.DefineTask(DogTask.Attack, OnTaskAttackEnter, OnTaskAttackUpdate, OnTaskAttackExit);
+        _task.DefineTask(TurtleTask.Attack, OnTaskAttackEnter, OnTaskAttackUpdate, OnTaskAttackExit);
     }
 
     private void SetTask()
     {
-        _task.AddTask(DogTask.Attack);
+        _task.AddTask(TurtleTask.Attack);
     }
 }

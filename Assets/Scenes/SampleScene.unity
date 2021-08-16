@@ -330,6 +330,15 @@ MonoBehaviour:
   - _enemyPopEnum: 4
     _hegiht: 1
     _popTime: 0.5
+  - _enemyPopEnum: 5
+    _hegiht: 1
+    _popTime: 0.5
+  - _enemyPopEnum: 5
+    _hegiht: 1
+    _popTime: 2
+  - _enemyPopEnum: 6
+    _hegiht: 1
+    _popTime: 2
 --- !u!4 &120748438
 Transform:
   m_ObjectHideFlags: 0
@@ -1829,6 +1838,8 @@ GameObject:
   - component: {fileID: 1001748541}
   - component: {fileID: 1001748542}
   - component: {fileID: 1001748543}
+  - component: {fileID: 1001748545}
+  - component: {fileID: 1001748544}
   m_Layer: 0
   m_Name: EnemyPopInfomations
   m_TagString: Untagged
@@ -1908,6 +1919,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f280456f11db3f43b1ce60e0fd24424, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1001748544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1001748537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecb5c0b5d5e34df41a8d0c2a38355f5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1001748545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1001748537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fa30147885ee76409723d80211d155e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1024581574
