@@ -1,11 +1,9 @@
-using System;
 using UniRx;
 using UnityEngine;
 
 //三毛猫コンポーネント
 public class Mike : Character, IDamageApplicable
 {
-    private PlayerCore _playerCore = new PlayerCore();
     private ICharacterAnimation _playerAnimation;
     private IPlayerInputEventProvider _playerInputEventPorvider;
     private Missiler _missiler;
@@ -18,6 +16,7 @@ public class Mike : Character, IDamageApplicable
     private Vector3[] _oldPosition;//オプションの座標で利用
     private ReactiveProperty<Vector3> _position = new ReactiveProperty<Vector3>();
     private bool _skipUpdateOldPosition = false;
+    private SpriteRenderer _renderer;
 
     public bool IsActiveDoubler { get; set; } = false;
 
@@ -26,10 +25,13 @@ public class Mike : Character, IDamageApplicable
     {
         _oldPosition = new Vector3[_memoryPositionNum];
         _position.Value = transform.position;
-        _position.Subscribe(_ => SetOldPosition());
+        _position
+            .Subscribe(_ => SetOldPosition())
+            .AddTo(this);
         base.Initialize();
         _characterAttack = GetComponent<ICharacterAttack>();
         var a = transform.GetChild(0);
+        _renderer = a.GetComponent<SpriteRenderer>();
         _playerAnimation = a.GetComponent<ICharacterAnimation>();
         _playerInputEventPorvider = GetComponent<IPlayerInputEventProvider>();
         _barrier = GetComponent<Barrier>();
@@ -40,6 +42,7 @@ public class Mike : Character, IDamageApplicable
 
     protected override void UpdateFrame()
     {
+        if (IsDead) return;
         if (_playerInputEventPorvider.OnShot.Value)
         {
             Attack();
@@ -54,10 +57,6 @@ public class Mike : Character, IDamageApplicable
         }
         SetOldPosition();
         UpdateOptionPosition();
-        if (Singleton<InputController>.Instance.B)
-        {
-            ApplyDamage();
-        }
     }
 
     protected override void Attack()
@@ -74,6 +73,8 @@ public class Mike : Character, IDamageApplicable
 
     public override void OnCollision(Collider col)
     {
+        if (IsDead) return;
+
         if (col.CompareTag("Enemy") || col.CompareTag("Ground"))
         {
             ApplyDamage();
@@ -94,8 +95,9 @@ public class Mike : Character, IDamageApplicable
         }
         if (IsDead)
         {
+            Singleton<CriSoundManager>.Instance.PlaySound(CueID.Dead);
             //死亡エフェクト
-            DestroyThis();
+            _renderer.enabled = false;
         }
     }
 
@@ -145,5 +147,16 @@ public class Mike : Character, IDamageApplicable
     {
         _options[0].SetPosition(_oldPosition[_memoryPositionNum / 2]);
         _options[1].SetPosition(_oldPosition[_memoryPositionNum - 1]);
+    }
+
+    public void Restart()
+    {
+        Singleton<LifeManager>.Instance.ReduceLive();
+        _hp.Value = 1;
+        transform.position = new Vector3(-5, 0, 0);
+        IsActiveDoubler = false;
+        _activOptionNum = 0;
+        _missiler.ActiveMissiler = false;
+        _renderer.enabled = true;
     }
 }

@@ -7,7 +7,8 @@ public class GameStateController
     public enum GameStateEnum
     {
         Title,
-        Game
+        Game,
+        Result
     }
 
     public enum StageStateEnum

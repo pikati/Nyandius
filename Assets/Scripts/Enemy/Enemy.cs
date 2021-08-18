@@ -9,8 +9,10 @@ public class Enemy : Character
     protected SpriteRenderer _spriteRenderer;
     private GameObject _item;
     private bool haveItem = false;
+    private GameManager _gameManager;
     protected override void Initialize()
     {
+        _gameManager = Singleton<GameManager>.Instance;
         _hp.Where(x => x <= 0)
             .Subscribe(_ => OnDead())
             .AddTo(this);
@@ -21,6 +23,10 @@ public class Enemy : Character
     protected override void UpdateFrame()
     {
         base.UpdateFrame();
+        if (_gameManager.IsPlayerDead())
+        {
+            DestroyThis();
+        }
     }
 
     public override void OnCollision(Collider col)
@@ -33,6 +39,7 @@ public class Enemy : Character
 
     protected override void OnDead()
     {
+        Singleton<CriSoundManager>.Instance.PlaySound(CueID.EnemyDead);
         Singleton<ScoreManager>.Instance.AddScore(_score);
         if(haveItem)
         {

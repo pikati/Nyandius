@@ -133,4 +133,10 @@ public class ColliderManager
             }
         }
     }
+
+    public void Reset()
+    {
+        _circleColliders.Clear();
+        _rectColliders.Clear();
+    }
 }

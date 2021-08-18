@@ -37,11 +37,14 @@ public class EnemyCreater : MonoBehaviour
     private SharkController _shark;
 
     private GameTimer _popTimer;
+
+    private GameManager _gameManager;
     
     
     // Start is called before the first frame update
     void Start()
     {
+        _gameManager = Singleton<GameManager>.Instance;
         var popObj = GameObject.Find("EnemyPopInfomations");
         _rat = popObj.GetComponent<RatController>();
         _rabbit = popObj.GetComponent<RabitController>();
@@ -57,6 +60,7 @@ public class EnemyCreater : MonoBehaviour
 
     private void PopEnemy()
     {
+        if (_gameManager.IsPlayerDead()) return;
         if (!_popTimer.UpdateTimer()) return;
 
         switch (_popInfo[_popIndex]._enemyPopEnum)
@@ -87,5 +91,11 @@ public class EnemyCreater : MonoBehaviour
         }
         _popIndex++;
         _popTimer.ResetTimer(_popInfo[_popIndex]._popTime);
+    }
+
+    public void Reset()
+    {
+        _popIndex = 0;
+        _popTimer = new GameTimer(_popInfo[_popIndex]._popTime);
     }
 }

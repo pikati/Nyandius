@@ -14,6 +14,7 @@ public class Churu : Behaviour
     {
         if(col.CompareTag("Player"))
         {
+            Singleton<CriSoundManager>.Instance.PlaySound(CueID.PowerUp);
             Singleton<GameManager>.Instance.PowerUpManager.GetPowerUp();
             DestroyThis();
         }
