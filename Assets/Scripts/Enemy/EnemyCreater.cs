@@ -60,7 +60,7 @@ public class EnemyCreater : MonoBehaviour
 
     private void PopEnemy()
     {
-        if (_gameManager.IsPlayerDead()) return;
+        if (_gameManager.IsPlayerDead() || Singleton<GameFacilitator>.Instance.GetGameState() != GameStateController.GameStateEnum.Game) return;
         if (!_popTimer.UpdateTimer()) return;
 
         switch (_popInfo[_popIndex]._enemyPopEnum)

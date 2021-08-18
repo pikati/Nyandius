@@ -159,4 +159,14 @@ public class Mike : Character, IDamageApplicable
         _missiler.ActiveMissiler = false;
         _renderer.enabled = true;
     }
+
+    public void Reset()
+    {
+        _hp.Value = 1;
+        transform.position = new Vector3(-5, 0, 0);
+        IsActiveDoubler = false;
+        _activOptionNum = 0;
+        _missiler.ActiveMissiler = false;
+        _renderer.enabled = true;
+    }
 }

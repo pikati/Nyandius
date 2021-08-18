@@ -18,7 +18,8 @@ public class TitleController : MonoBehaviour
     private RectTransform _cursor;
     private IntReactiveProperty _index = new IntReactiveProperty(0);
     private InputController _ic;
-    private bool _isInput = false;
+    private bool _isInput = true;
+    private GameTimer _timer = new GameTimer(0.5f);
     // Start is called before the first frame update
     void Start()
     {
@@ -33,9 +34,15 @@ public class TitleController : MonoBehaviour
 
     private void CheckInput()
     {
-        if (Singleton<GameFacilitator>.Instance.GetGameState() == GameStateController.GameStateEnum.Game) return;
+        if (Singleton<GameFacilitator>.Instance.GetGameState() != GameStateController.GameStateEnum.Title) return;
+        if (!_timer.UpdateTimer()) return;
         if(_ic.A)
         {
+            if (_isInput)
+            {
+                return;
+            }
+            _isInput = true;
             OnSelect();
         }
         if (_ic.MoveValue.y > 0.7f || _ic.ArrowValue.y > 0)
@@ -92,6 +99,7 @@ public class TitleController : MonoBehaviour
             default:
                 break;
         }
+        _timer.ResetTimer();
     }
 
     private void MoveCursor(int moveValue)

@@ -39,7 +39,6 @@ public class GameFacilitator : Singleton<GameFacilitator>
         _isTitleVisible = false;
         _title.SetActive(false);
         _credit.SetActive(false);
-        _result.SetActive(false);
         _mainObjs.SetActive(true);
         _main.SetActive(true);
     }
@@ -52,14 +51,23 @@ public class GameFacilitator : Singleton<GameFacilitator>
     public void DispResult()
     {
         _gameStateController.ChangeGameState(GameStateController.GameStateEnum.Result);
+        _main.SetActive(false);
+        _mainObjs.SetActive(false);
         _result.SetActive(true);
     }
 
     public void ToTitle()
     {
         _gameStateController.ChangeGameState(GameStateController.GameStateEnum.Title);
-        _main.SetActive(false);
-        _mainObjs.SetActive(false);
+        _result.SetActive(false);
         _title.SetActive(true);
+        Singleton<LifeManager>.Instance?.Reset();
     }
+
+    public void ToRanking()
+    {
+        var score = Singleton<ScoreManager>.Instance.Score.Value;
+        naichilab.RankingLoader.Instance.SendScoreAndShowRanking(score);
+    }
+
 }

@@ -15,13 +15,29 @@ public class ResultController : MonoBehaviour
     private RectTransform _cursor;
     private IntReactiveProperty _index = new IntReactiveProperty(0);
     private InputController _ic;
-    private bool _isInput = false;
+    private bool _isInput = true;
+
+    void Start()
+    {
+        _ic = Singleton<InputController>.Instance;
+        this.UpdateAsObservable()
+            .Subscribe(_ => CheckInput())
+            .AddTo(this);
+        _index
+            .Subscribe(_ => ChangeCursorPosition())
+            .AddTo(this);
+    }
 
     private void CheckInput()
     {
-        if (Singleton<GameFacilitator>.Instance.GetGameState() == GameStateController.GameStateEnum.Game) return;
+        if (Singleton<GameFacilitator>.Instance.GetGameState() != GameStateController.GameStateEnum.Result) return;
         if (_ic.A)
         {
+            if (_isInput)
+            {
+                return;
+            }
+            _isInput = true;
             OnSelect();
         }
         if (_ic.MoveValue.x > 0.7f || _ic.ArrowValue.x > 0)
@@ -63,10 +79,10 @@ public class ResultController : MonoBehaviour
         switch ((ResultButton)_index.Value)
         {
             case ResultButton.ToTitle:
-                Singleton<GameFacilitator>.Instance.StartMain();
+                Singleton<GameFacilitator>.Instance.ToTitle();
                 break;
             case ResultButton.Ranking:
-                Singleton<GameFacilitator>.Instance.VisibleChange();
+                Singleton<GameFacilitator>.Instance.ToRanking();
                 break;
             default:
                 break;

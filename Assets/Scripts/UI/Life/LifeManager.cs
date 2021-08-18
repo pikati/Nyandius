@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class LifeManager : Singleton<LifeManager>
 {
-    private IntReactiveProperty _life = new IntReactiveProperty(3);
+    private IntReactiveProperty _life = new IntReactiveProperty(1);
     public IReadOnlyReactiveProperty<int> Life => _life;
     private void Start()
     {
@@ -21,6 +21,11 @@ public class LifeManager : Singleton<LifeManager>
     public void AddLive()
     {
         _life.Value++;
+    }
+
+    public void Reset()
+    {
+        _life.Value = 3;
     }
 
     private void EndMainGame()
