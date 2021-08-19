@@ -36,7 +36,6 @@ public class Missile : Bullet
         else if (col.CompareTag("Enemy"))
         {
             //ƒ_ƒ[ƒWˆ—
-            DestroyMissle();
             DestroyThis();
         }
     }

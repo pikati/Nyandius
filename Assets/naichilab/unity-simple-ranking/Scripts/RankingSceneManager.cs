@@ -229,6 +229,7 @@ namespace naichilab
         {
             closeButton.interactable = false;
             UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync("Ranking");
+            Singleton<GameFacilitator>.Instance.CanInput = false;
         }
 
         private void MaskOffOn()

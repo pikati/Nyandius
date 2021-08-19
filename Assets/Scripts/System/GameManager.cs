@@ -7,11 +7,13 @@ public class GameManager : Singleton<GameManager>
     public PowerUpManager PowerUpManager { get; private set; }
     private ColliderManager _colliderManager;
     private EnemyCreater _enemyCreater;
+    [SerializeField]
     private Mike _player;
     private BoolReactiveProperty _isDead = new BoolReactiveProperty(false);
     private GameTimer _resetTimer = new GameTimer(3.0f);
     private bool _endGame = false;
     private GameFacilitator _gameFicillitator;
+    public int LoopNum { get; private set; } = 0;
 
     // Start is called before the first frame update
     void Awake()
@@ -19,7 +21,6 @@ public class GameManager : Singleton<GameManager>
         _colliderManager = new ColliderManager();
         PowerUpManager = new PowerUpManager();
         PowerUpManager.SetPowerUpModel(GameObject.Find("PowerUpModel").GetComponent<PowerUpModel>());
-        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Mike>();
         _enemyCreater = GameObject.Find("EnemyPopManager").GetComponent<EnemyCreater>();
         _gameFicillitator = Singleton<GameFacilitator>.Instance;
         _isDead
@@ -30,10 +31,10 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
-        ResetGame();
-        RestartGame();
         PowerUpManager.SetPlayer(_player);
         _endGame = false;
+        ResetGame();
+        RestartGame();
     }
 
     // Update is called once per frame

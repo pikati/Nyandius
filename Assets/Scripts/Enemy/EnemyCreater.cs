@@ -24,8 +24,19 @@ public class EnemyCreater : MonoBehaviour
         public float _popTime;
     }
 
+    [System.Serializable]
+    public class EnemyPopInfos
+    {
+        public EnemyPopInfo[] _enemyPopInfo;
+    }
+
+
     [SerializeField]
-    private EnemyPopInfo[] _popInfo;
+    private EnemyPopInfos[] _popInfos;
+    [SerializeField]
+    private int[] _middleBossIndex;
+    [SerializeField]
+    private int[] _bossIndex;
     private int _popIndex = 0;
 
     private RatController _rat;
@@ -53,7 +64,7 @@ public class EnemyCreater : MonoBehaviour
         _turtle = popObj.GetComponent<TurtleController>();
         _volcano = popObj.GetComponent<VolcanoController>();
         _shark = popObj.GetComponent<SharkController>();
-        _popTimer = new GameTimer(_popInfo[_popIndex]._popTime);
+        _popTimer = new GameTimer(_popInfos[_popIndex]._enemyPopInfo[_popIndex]._popTime);
         this.UpdateAsObservable()
             .Subscribe(_ => PopEnemy());
     }
@@ -63,39 +74,39 @@ public class EnemyCreater : MonoBehaviour
         if (_gameManager.IsPlayerDead() || Singleton<GameFacilitator>.Instance.GetGameState() != GameStateController.GameStateEnum.Game) return;
         if (!_popTimer.UpdateTimer()) return;
 
-        switch (_popInfo[_popIndex]._enemyPopEnum)
+        switch (_popInfos[_popIndex]._enemyPopInfo[_popIndex]._enemyPopEnum)
         {
             case EnemyPopEnum.Rat:
-                _rat.CreateRat(_popInfo[_popIndex]._hegiht);
+                _rat.CreateRat(_popInfos[_popIndex]._enemyPopInfo[_popIndex]._hegiht);
                 break;
             case EnemyPopEnum.Rabbit:
-                _rabbit.CreateRabbit(_popInfo[_popIndex]._hegiht);
+                _rabbit.CreateRabbit(_popInfos[_popIndex]._enemyPopInfo[_popIndex]._hegiht);
                 break;
             case EnemyPopEnum.Bird:
-                _bird.CreateBird(_popInfo[_popIndex]._hegiht);
+                _bird.CreateBird(_popInfos[_popIndex]._enemyPopInfo[_popIndex]._hegiht);
                 break;
             case EnemyPopEnum.Dog:
-                _dog.CreateDog(_popInfo[_popIndex]._hegiht);
+                _dog.CreateDog(_popInfos[_popIndex]._enemyPopInfo[_popIndex]._hegiht);
                 break;
             case EnemyPopEnum.Turtle:
-                _turtle.CreateTurtle(_popInfo[_popIndex]._hegiht);
+                _turtle.CreateTurtle(_popInfos[_popIndex]._enemyPopInfo[_popIndex]._hegiht);
                 break;
             case EnemyPopEnum.Volcano:
-                _volcano.CreateVolcano(_popInfo[_popIndex]._hegiht);
+                _volcano.CreateVolcano(_popInfos[_popIndex]._enemyPopInfo[_popIndex]._hegiht);
                 break;
             case EnemyPopEnum.Shark:
-                _shark.CreateShark(_popInfo[_popIndex]._hegiht);
+                _shark.CreateShark(_popInfos[_popIndex]._enemyPopInfo[_popIndex]._hegiht);
                 break;
             default:
                 break;
         }
         _popIndex++;
-        _popTimer.ResetTimer(_popInfo[_popIndex]._popTime);
+        _popTimer.ResetTimer(_popInfos[_popIndex]._enemyPopInfo[_popIndex]._popTime);
     }
 
     public void Reset()
     {
         _popIndex = 0;
-        _popTimer = new GameTimer(_popInfo[_popIndex]._popTime);
+        _popTimer = new GameTimer(_popInfos[_popIndex]._enemyPopInfo[_popIndex]._popTime);
     }
 }

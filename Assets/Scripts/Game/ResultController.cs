@@ -31,6 +31,7 @@ public class ResultController : MonoBehaviour
     private void CheckInput()
     {
         if (Singleton<GameFacilitator>.Instance.GetGameState() != GameStateController.GameStateEnum.Result) return;
+        if (Singleton<GameFacilitator>.Instance.CanInput) return;
         if (_ic.A)
         {
             if (_isInput)

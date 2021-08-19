@@ -33,7 +33,7 @@ public class Enemy : Character
     {
         if (col.CompareTag("Bullet"))
         {
-            OnDamage(1);
+            OnDamage(col.GetComponent<Bullet>().Damage());
         }
     }
 

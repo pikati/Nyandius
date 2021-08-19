@@ -6,7 +6,7 @@ public class Character : Behaviour
     protected BulletType _bulletType;
     protected IDamageApplicable _damageApplcable;
     protected ICharacterAttack _characterAttack;
-    protected IntReactiveProperty _hp = new IntReactiveProperty(1);
+    protected FloatReactiveProperty _hp = new FloatReactiveProperty(1);
     public bool IsDead
     {
         get
@@ -42,7 +42,7 @@ public class Character : Behaviour
         _bulletType = type;
     }
 
-    protected void OnDamage(int damage)
+    protected void OnDamage(float damage)
     {
         _hp.Value -= damage;
     }

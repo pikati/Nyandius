@@ -88,6 +88,7 @@ public class TitleController : MonoBehaviour
         switch ((TitleButtonState)_index.Value)
         {
             case TitleButtonState.Start:
+                Singleton<ScoreManager>.Instance.ResetScore();
                 Singleton<GameFacilitator>.Instance.StartMain();
                 break;
             case TitleButtonState.Credit:

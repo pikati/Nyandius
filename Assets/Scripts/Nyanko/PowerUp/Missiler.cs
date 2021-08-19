@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Missiler : Singleton<Missiler>
 {
-    private Shooter _missleShooter;
     public int MissleNum { get; set; } = 0;
     public int ShooterNum { get; set; } = 0;
     public bool ActiveMissiler { get; set; } = false;
