@@ -9,17 +9,16 @@ public class Dog : Enemy
         Attack
     }
     TaskList<DogTask> _task = new TaskList<DogTask>();
-    private float _speed = 4.0f;
-    private float _rad = 1.0f;
-    private float _angle = 0;
     private Transform _playerTransform;
     private readonly float _attackInterval = 1.5f;
     private GameTimer _attackTimer;
+    private GameManager _gm;
 
     protected override void Initialize()
     {
-        _score = 400;
-        _hp.Value = 1;
+        _gm = Singleton<GameManager>.Instance;
+        _score = 400 + (_gm.LoopNum * 200);
+        _hp.Value = 1 + (_gm.LoopNum * 3);
         _attackTimer = new GameTimer(_attackInterval);
         _playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         DefineTask();
@@ -42,8 +41,21 @@ public class Dog : Enemy
             if(_attackTimer.UpdateTimer())
             {
                 var bullet = Instantiate(_bullet, transform.position, Quaternion.identity).GetComponent<EnemyBullet>();
-                bullet.SetDirection((_playerTransform.position - transform.position).normalized);
+                var dir  = (_playerTransform.position - transform.position).normalized;
+                bullet.SetDirection(dir);
                 bullet.SetSpeed(5.0f);
+                if(_gm.LoopNum >= 1)
+                {
+                    var bullet2 = Instantiate(_bullet, transform.position, Quaternion.identity).GetComponent<EnemyBullet>();
+                    bullet2.SetDirection(dir);
+                    bullet2.SetSpeed(3.0f);
+                }
+                if(_gm.LoopNum >= 3)
+                {
+                    var bullet2 = Instantiate(_bullet, transform.position, Quaternion.identity).GetComponent<EnemyBullet>();
+                    bullet2.SetDirection(dir);
+                    bullet2.SetSpeed(7.0f);
+                }
                 _attackTimer.ResetTimer();
             }
         }

@@ -13,7 +13,10 @@ public class GameManager : Singleton<GameManager>
     private GameTimer _resetTimer = new GameTimer(3.0f);
     private bool _endGame = false;
     private GameFacilitator _gameFicillitator;
-    public int LoopNum { get; private set; } = 0;
+    public int LoopNum { get; private set; } = 1;
+    public GameTimer BossTimer { get; private set; } = new GameTimer(0);
+    private bool _isMiddleBoss = true;
+    public bool IsBoss = false;
 
     // Start is called before the first frame update
     void Awake()
@@ -51,6 +54,7 @@ public class GameManager : Singleton<GameManager>
                 RestartGame();
             }
         }
+        BossTimer.UpdateTimer();
     }
 
     public void RegisterCollider(CircleCollider c)
@@ -73,6 +77,18 @@ public class GameManager : Singleton<GameManager>
         return _player.IsDead;
     }
 
+    public void SetBossTimer()
+    {
+        Invoke("ResetBossTimer", 4.0f);
+    }
+
+    public void CountLoop()
+    {
+        IsBoss = false;
+        LoopNum++;
+        _player.ToStart();
+    }
+
     private void OnDestroy()
     {
         PowerUpManager.Destory();
@@ -80,14 +96,28 @@ public class GameManager : Singleton<GameManager>
 
     private void ResetGame()
     {
-        _enemyCreater.Reset();
         _endGame = true;
     }
 
     private void RestartGame()
     {
         _endGame = false;
+        _enemyCreater.Reset();
         _player.Restart();
         _resetTimer.ResetTimer();
+        Singleton<CriSoundManager>.Instance.PlayBGM(CueID.Intoro);
+    }
+
+    private void ResetBossTimer()
+    {
+        if(_isMiddleBoss)
+        {
+            BossTimer.ResetTimer(20.0f + (LoopNum * 5.0f));
+        }
+        else
+        {
+            IsBoss = true;
+        }
+        _isMiddleBoss = !_isMiddleBoss;
     }
 }

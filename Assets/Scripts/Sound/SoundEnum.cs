@@ -1,11 +1,12 @@
 public enum CueID 
 {
-    Dead,
     Decide,
+    PowerUp,
+    Shot,
+    Lazer,
+    PlayerDead,
     EnemyDead,
     Intoro,
-    IntoroEcho,
-    Lazer,
-    PowerUp,
-    Shot
+    Main,
+    Boss
 }

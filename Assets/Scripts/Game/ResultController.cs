@@ -77,10 +77,12 @@ public class ResultController : MonoBehaviour
 
     private void OnSelect()
     {
+        Singleton<CriSoundManager>.Instance.PlaySE(CueID.Decide);
         switch ((ResultButton)_index.Value)
         {
             case ResultButton.ToTitle:
                 Singleton<GameFacilitator>.Instance.ToTitle();
+                Singleton<CriSoundManager>.Instance.StopBGM();
                 break;
             case ResultButton.Ranking:
                 Singleton<GameFacilitator>.Instance.ToRanking();
@@ -92,6 +94,7 @@ public class ResultController : MonoBehaviour
 
     private void MoveCursor(int moveValue)
     {
+        Singleton<CriSoundManager>.Instance.PlaySE(CueID.Decide);
         _index.Value += moveValue;
         var max = (int)TitleButtonState.Max;
         if (_index.Value > max)

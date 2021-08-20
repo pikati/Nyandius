@@ -16,11 +16,11 @@ public class PlayerAttack : MonoBehaviour, ICharacterAttack
     {
         if(type == BulletType.Lazer)
         {
-            Singleton<CriSoundManager>.Instance.PlaySound(CueID.Lazer);
+            Singleton<CriSoundManager>.Instance.PlaySE(CueID.Lazer);
         }
         else
         {
-            Singleton<CriSoundManager>.Instance.PlaySound(CueID.Shot);
+            Singleton<CriSoundManager>.Instance.PlaySE(CueID.Shot);
         }
         _shooter.ShotBullet(position, type);
     }

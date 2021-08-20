@@ -5,7 +5,6 @@ using UnityEngine;
 public class VolcanoBullet : Enemy
 {
     private Vector3 _direction;
-    private bool _isReverse = false;
     private float _gravity = -2.0f;
     public void SetDirection(Vector3 direction)
     {
@@ -33,7 +32,6 @@ public class VolcanoBullet : Enemy
 
     public void SetReverse()
     {
-        _isReverse = true;
         _gravity = 2.0f;
         _direction.y *= -1;
     }

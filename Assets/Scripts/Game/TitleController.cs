@@ -85,6 +85,7 @@ public class TitleController : MonoBehaviour
 
     private void OnSelect()
     {
+        Singleton<CriSoundManager>.Instance.PlaySE(CueID.Decide);
         switch ((TitleButtonState)_index.Value)
         {
             case TitleButtonState.Start:
@@ -105,9 +106,10 @@ public class TitleController : MonoBehaviour
 
     private void MoveCursor(int moveValue)
     {
+        Singleton<CriSoundManager>.Instance.PlaySE(CueID.Decide);
         _index.Value += moveValue;
         var max = (int)TitleButtonState.Max;
-        if (_index.Value > max)
+        if (_index.Value >= max)
         {
             _index.Value = max - 1;
         }

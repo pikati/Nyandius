@@ -21,7 +21,7 @@ public class Mike : Character, IDamageApplicable
     public bool IsActiveDoubler { get; set; } = false;
 
     private GameTimer _animTimer = new GameTimer(0.5f);
-    protected override void Initialize()
+    private void Start()
     {
         _oldPosition = new Vector3[_memoryPositionNum];
         _position.Value = transform.position;
@@ -95,7 +95,8 @@ public class Mike : Character, IDamageApplicable
         }
         if (IsDead)
         {
-            Singleton<CriSoundManager>.Instance.PlaySound(CueID.Dead);
+            Singleton<CriSoundManager>.Instance.StopBGM();
+            Singleton<CriSoundManager>.Instance.PlaySE(CueID.PlayerDead);
             //死亡エフェクト
             _renderer.enabled = false;
         }
@@ -168,5 +169,10 @@ public class Mike : Character, IDamageApplicable
         _activOptionNum = 0;
         _missiler.ActiveMissiler = false;
         _renderer.enabled = true;
+    }
+
+    public void ToStart()
+    {
+        transform.position = new Vector3(-5, 0, 0);
     }
 }

@@ -36,7 +36,7 @@ public class PowerUpView : MonoBehaviour
                 }
             }
         }
-        catch (System.NullReferenceException e)
+        catch (System.NullReferenceException)
         {
             Debug.Log($"index: {index - 1} is null occurred in PowerUpView SetSelectColor");
         }

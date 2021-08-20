@@ -13,10 +13,12 @@ public class Rabbit : Enemy
     private float _rad = 1.0f;
     private float _angle = 0;
     private float _posY;
+    private GameManager _gm;
     protected override void Initialize()
     {
-        _score = 100;
-        _hp.Value = 1;
+        _gm = Singleton<GameManager>.Instance;
+        _score = 100 + (_gm.LoopNum * 100);
+        _hp.Value = 1 + (_gm.LoopNum * 6);
         _posY = transform.position.y;
         DefineTask();
         SetTask();
@@ -34,7 +36,7 @@ public class Rabbit : Enemy
     {
         var pos = transform.position;
         transform.position = new Vector3(pos.x - _speed * Time.deltaTime, _posY + _rad * Mathf.Sin(_angle), 0);
-        _angle += 0.0075f;
+        _angle += 0.0075f + (_gm.LoopNum * 0.002f);
         if(_angle > Mathf.PI * 2)
         {
             _angle -= Mathf.PI * 2;

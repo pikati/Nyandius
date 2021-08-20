@@ -9,15 +9,23 @@ public class Turtle : Enemy
         Attack
     }
     TaskList<TurtleTask> _task = new TaskList<TurtleTask>();
-    private readonly float _createInterval = 1.5f;
+    private float _createInterval = 1.5f;
     private GameTimer _createTimer;
     private GameObject _squirrel;
     private float _maxHP;
+    private GameManager _gm;
 
     protected override void Initialize()
     {
-        _score = 800;
-        _hp.Value = 6;
+        _gm = Singleton<GameManager>.Instance;
+        _createInterval = _createInterval - (_gm.LoopNum * 0.2f);
+        if(_createInterval < 0.25f)
+        {
+            _createInterval = 0.25f;
+        }
+
+        _score = 800 + (_gm.LoopNum * 250);
+        _hp.Value = 6 + (_gm.LoopNum * 15);
         _maxHP = _hp.Value;
         _createTimer = new GameTimer(_createInterval);
         _squirrel = Resources.Load("Enemy/Squirrel") as GameObject;

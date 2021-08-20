@@ -37,6 +37,7 @@ public class GameFacilitator : Singleton<GameFacilitator>
     public void StartMain()
     {
         _gameStateController.ChangeGameState(GameStateController.GameStateEnum.Game);
+        Singleton<CriSoundManager>.Instance.PlayBGM(CueID.Intoro);
         _isTitleVisible = false;
         _title.SetActive(false);
         _credit.SetActive(false);

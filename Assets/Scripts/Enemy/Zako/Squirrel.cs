@@ -14,11 +14,13 @@ public class Squirrel : Enemy
     private Transform _playerTransform;
     private Vector3 _moveDirection;
     private float _speed = 4.5f;
+    private GameManager _gm;
 
     protected override void Initialize()
     {
-        _score = 300;
-        _hp.Value = 1;
+        _gm = Singleton<GameManager>.Instance;
+        _score = 300 + (_gm.LoopNum * 50);
+        _hp.Value = 1 + (_gm.LoopNum * 2);
         _playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         DefineTask();
         SetTask();
@@ -49,7 +51,7 @@ public class Squirrel : Enemy
         {
             return true;
         }
-        transform.position += _moveDirection * Time.deltaTime * _speed;
+        transform.position += _moveDirection * Time.deltaTime * _speed * (1 + _gm.LoopNum * 0.1f);
         return false;
     }
 

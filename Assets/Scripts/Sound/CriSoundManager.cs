@@ -6,6 +6,7 @@ public class CriSoundManager : Singleton<CriSoundManager>
 {
     private CriAtomEx.CueInfo[] _cueInfoList;
     private CriAtomExPlayer _atomExPlayer;
+    private CriAtomExPlayer _BGMPlayer;
     private CriAtomExAcb _atomExAcb;
 
     IEnumerator Start()
@@ -18,7 +19,10 @@ public class CriSoundManager : Singleton<CriSoundManager>
 
         /* AtomExPlayerÇÃê∂ê¨ */
         _atomExPlayer = new CriAtomExPlayer();
-
+        _BGMPlayer = new CriAtomExPlayer();
+        _BGMPlayer.AttachFader();
+        _BGMPlayer.SetFadeOutTime(5000);
+        _BGMPlayer.SetFadeInTime(1000);
         /* CueèÓïÒÇÃéÊìæ */
         _atomExAcb = CriAtom.GetAcb("CueSheet_0");
         _cueInfoList = _atomExAcb.GetCueInfoList();
@@ -28,14 +32,33 @@ public class CriSoundManager : Singleton<CriSoundManager>
         _atomExPlayer.Dispose();
     }
 
-    public void PlaySound(CueID cueID)
+    public void PlaySE(CueID cueID)
     {
+        if (cueID >= CueID.Intoro) return;
+        if(cueID == CueID.Lazer || cueID == CueID.Shot)
+        {
+            _atomExPlayer.SetVolume(0.3f);
+        }
         _atomExPlayer.SetCue(_atomExAcb, _cueInfoList[(int)cueID].name);
         _atomExPlayer.Start();
+        _atomExPlayer.SetVolume(1.0f);
     }
 
-    public void StopSound()
+    public void PlayBGM(CueID cueID)
+    {
+        if (cueID < CueID.Intoro) return;
+        _BGMPlayer.SetCue(_atomExAcb, _cueInfoList[(int)cueID].name);
+        _BGMPlayer.Start();
+    }
+
+
+    public void StopSE()
     {
         _atomExPlayer.Stop();
+    }
+
+    public void StopBGM()
+    {
+        _BGMPlayer.Stop();
     }
 }

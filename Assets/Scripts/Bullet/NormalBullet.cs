@@ -12,7 +12,7 @@ public class NormalBullet : Bullet
 
     public override void OnCollision(Collider col)
     {
-        if(!col.CompareTag("Player"))
+        if(col.CompareTag("Enemy") || col.CompareTag("Ground"))
         {
             DestroyThis();
         }

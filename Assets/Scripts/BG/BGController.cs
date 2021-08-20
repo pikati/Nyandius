@@ -24,9 +24,14 @@ public class BGController : MonoBehaviour
         {
             transform.position = _startPosition;
         }
-        else
+        if (_gameManager.BossTimer.IsTimeUp && !_gameManager.IsBoss)
         {
             transform.position += Vector3.left * _speed * Time.deltaTime;
         }
+    }
+
+    public void ResetPosition()
+    {
+        transform.position = _startPosition;
     }
 }

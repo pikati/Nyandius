@@ -5,12 +5,19 @@ using UnityEngine;
 public class Volcano : Enemy
 {
     private GameTimer _shotTimer;
+    private GameManager _gameManager;
+    private float _coolTimeMin;
+    private float _coolTimeMax;
+
     protected override void Initialize()
     {
         _hp.Value = 500;
         _score = 10000;
         _bullet = Resources.Load("Bullet/VolcanoBullet") as GameObject;
         _shotTimer = new GameTimer(Random.Range(0f, 2f));
+        _gameManager = Singleton<GameManager>.Instance;
+        _coolTimeMin = 0.5f / (1 + _gameManager.LoopNum);
+        _coolTimeMax = 1.0f / (1 + _gameManager.LoopNum);
     }
 
     protected override void UpdateFrame()
@@ -23,8 +30,11 @@ public class Volcano : Enemy
             {
                 b.SetReverse();
             }
-            _shotTimer.ResetTimer(Random.Range(0.5f, 1.0f));
+            _shotTimer.ResetTimer(Random.Range(_coolTimeMin, _coolTimeMax));
         }
-        transform.position += Vector3.left * 1.5f * Time.deltaTime;
+        if(_gameManager.BossTimer.IsTimeUp)
+        {
+            transform.position += Vector3.left * 1.5f * Time.deltaTime;
+        }
     }
 }

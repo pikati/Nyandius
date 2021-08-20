@@ -39,7 +39,7 @@ public class Enemy : Character
 
     protected override void OnDead()
     {
-        Singleton<CriSoundManager>.Instance.PlaySound(CueID.EnemyDead);
+        Singleton<CriSoundManager>.Instance.PlaySE(CueID.EnemyDead);
         Singleton<ScoreManager>.Instance.AddScore(_score);
         if(haveItem)
         {

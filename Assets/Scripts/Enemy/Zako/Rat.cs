@@ -16,11 +16,13 @@ public class Rat : Enemy
     private Transform _playerTransform;
     private Vector3 _moveDirection;
     private float _speed = 5.0f;
+    private GameManager _gm;
 
     protected override void Initialize()
     {
-        _score = 200;
-        _hp.Value = 1;
+        _gm = Singleton<GameManager>.Instance;
+        _score = 200 + (_gm.LoopNum * 50);
+        _hp.Value = 1 + (_gm.LoopNum * 3);
         _playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         DefineTask();
         SetTask();
@@ -59,7 +61,7 @@ public class Rat : Enemy
     {
         var bullet = Instantiate(_bullet, transform.position, Quaternion.identity).GetComponent<EnemyBullet>();
         bullet.SetDirection((_playerTransform.position - transform.position).normalized);
-        bullet.SetSpeed(5.0f);
+        bullet.SetSpeed(5.0f + (_gm.LoopNum * 1.0f));
         return true;
     }
 

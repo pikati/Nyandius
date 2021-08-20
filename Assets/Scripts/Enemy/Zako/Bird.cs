@@ -14,11 +14,13 @@ public class Bird : Enemy
     private Transform _playerTransform;
     private Vector3 _moveDirection;
     private float _speed = 3.0f;
+    private GameManager _gm;
 
     protected override void Initialize()
     {
-        _score = 200;
-        _hp.Value = 1;
+        _gm = Singleton<GameManager>.Instance;
+        _score = 200 * (_gm.LoopNum * 50);
+        _hp.Value = 1 + _gm.LoopNum;
         _playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         DefineTask();
         SetTask();
@@ -63,7 +65,7 @@ public class Bird : Enemy
 
     private void OnTaskAttackEnter()
     {
-        _moveDirection = Vector3.left;
+        _moveDirection = new Vector3(1 + 0.25f * _gm.LoopNum, 0, 0);
     }
 
     private bool OnTaskAttackUpdate()

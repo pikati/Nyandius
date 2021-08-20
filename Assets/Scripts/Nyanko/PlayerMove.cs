@@ -56,4 +56,9 @@ public class PlayerMove : MonoBehaviour
         }
         transform.position += new Vector3(move.x * Time.deltaTime, move.y * Time.deltaTime) * (_speed + _speeder.SpeedUpNum * 2);
     }
+
+    public void ResetPosition()
+    {
+        transform.position = new Vector3(-5, 0, 0);
+    }
 }

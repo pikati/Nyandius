@@ -27,8 +27,6 @@ public class Barrier : MonoBehaviour
         if (_isInvincible) return;
         _barrierNum -= damage;
         ChangeBarrierColor();
-        Debug.Log(_barrierNum);
-        //Invicible(this.GetCancellationTokenOnDestroy()).Forget();
         if (_barrierNum <= 0)
         {
             DeactivateBarrier();
