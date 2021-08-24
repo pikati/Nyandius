@@ -3,12 +3,13 @@ using UnityEngine;
 
 public class LifeManager : Singleton<LifeManager>
 {
-    private IntReactiveProperty _life = new IntReactiveProperty(1);
+    private IntReactiveProperty _life = new IntReactiveProperty(2);
     public IReadOnlyReactiveProperty<int> Life => _life;
     private void Start()
     {
         _life
             .Where(x => x < 0)
+            .Take(1)
             .Subscribe(_ => EndMainGame())
             .AddTo(this);
     }

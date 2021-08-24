@@ -13,17 +13,22 @@ public class GameFacilitator : Singleton<GameFacilitator>
     [SerializeField]
     private GameObject _result;
     [SerializeField]
+    private GameObject _clear;
+    [SerializeField]
     private GameObject _mainObjs;
     private bool _isTitleVisible = false;
     private GameStateController _gameStateController;
+    private GameManager _gameManager;
     public bool CanInput { get; set; } = false;
 
     private void Start()
     {
+        _gameManager = Singleton<GameManager>.Instance;
         _gameStateController = new GameStateController();
         _main.SetActive(false);
         _result.SetActive(false);
         _mainObjs.SetActive(false);
+        _clear.SetActive(false);
         VisibleChange();
     }
 
@@ -43,6 +48,8 @@ public class GameFacilitator : Singleton<GameFacilitator>
         _credit.SetActive(false);
         _mainObjs.SetActive(true);
         _main.SetActive(true);
+        _gameManager.ResetLoopNum();
+        _gameManager.StartGame();
     }
 
     public GameStateController.GameStateEnum GetGameState()
@@ -52,11 +59,18 @@ public class GameFacilitator : Singleton<GameFacilitator>
 
     public void DispResult()
     {
-        _gameStateController.ChangeGameState(GameStateController.GameStateEnum.Result);
-        Singleton<ScoreManager>.Instance.SetHiScore();
+        
+        _gameManager.GameClear();
+        if (Singleton<GameManager>.Instance.LoopNum == 3)
+        {
+            _clear.SetActive(true);
+        }
         _main.SetActive(false);
         _mainObjs.SetActive(false);
         _result.SetActive(true);
+        _gameStateController.ChangeGameState(GameStateController.GameStateEnum.Result);
+        Singleton<ScoreManager>.Instance.SetHiScore();
+
     }
 
     public void ToTitle()
@@ -64,8 +78,10 @@ public class GameFacilitator : Singleton<GameFacilitator>
         if (CanInput) return;
         _gameStateController.ChangeGameState(GameStateController.GameStateEnum.Title);
         _result.SetActive(false);
+        _clear.SetActive(false);
         _title.SetActive(true);
         Singleton<LifeManager>.Instance.Reset();
+        Singleton<CriSoundManager>.Instance.StopBGM();
     }
 
     public void ToRanking()

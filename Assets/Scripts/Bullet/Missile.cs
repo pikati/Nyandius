@@ -13,6 +13,7 @@ public class Missile : Bullet
         _missiler = Singleton<Missiler>.Instance;
         _missiler.MissleNum++;
         _speed = 0.01f;
+        _damage = 1 + Singleton<GameManager>.Instance.LoopNum * 1.5f;
     }
 
     protected override void Move()
@@ -33,7 +34,7 @@ public class Missile : Bullet
             _direction = new Vector2(1.0f, 0);
             //進行方向横
         }
-        else if (col.CompareTag("Enemy"))
+        else if (col.CompareTag("Enemy") || col.CompareTag("HardEnemy"))
         {
             //ダメージ処理
             DestroyThis();

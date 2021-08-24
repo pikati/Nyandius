@@ -15,7 +15,8 @@ public class BGController : MonoBehaviour
         _gameManager = Singleton<GameManager>.Instance;
         _startPosition = transform.position;
         this.UpdateAsObservable()
-            .Subscribe(_ => UpdatePosition());
+            .Subscribe(_ => UpdatePosition())
+            .AddTo(this);
     }
 
     private void UpdatePosition()

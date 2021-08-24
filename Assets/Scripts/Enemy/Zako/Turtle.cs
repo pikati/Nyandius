@@ -18,21 +18,18 @@ public class Turtle : Enemy
     protected override void Initialize()
     {
         _gm = Singleton<GameManager>.Instance;
-        _createInterval = _createInterval - (_gm.LoopNum * 0.2f);
-        if(_createInterval < 0.25f)
-        {
-            _createInterval = 0.25f;
-        }
+        _createInterval = _createInterval - (_gm.LoopNum * 0.5f);
 
         _score = 800 + (_gm.LoopNum * 250);
-        _hp.Value = 6 + (_gm.LoopNum * 15);
+        _hp.Value = 6 + (_gm.LoopNum * 45);
         _maxHP = _hp.Value;
         _createTimer = new GameTimer(_createInterval);
         _squirrel = Resources.Load("Enemy/Squirrel") as GameObject;
         DefineTask();
         SetTask();
         this.UpdateAsObservable()
-            .Subscribe(_ => _task.UpdateTask());
+            .Subscribe(_ => _task.UpdateTask())
+            .AddTo(this);
         base.Initialize();
     }
 

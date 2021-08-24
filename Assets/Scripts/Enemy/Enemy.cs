@@ -8,22 +8,25 @@ public class Enemy : Character
     protected GameObject _bullet;
     protected SpriteRenderer _spriteRenderer;
     private GameObject _item;
+    private GameObject _effect;
     private bool haveItem = false;
-    private GameManager _gameManager;
     protected override void Initialize()
     {
-        _gameManager = Singleton<GameManager>.Instance;
         _hp.Where(x => x <= 0)
+            .Take(1)
             .Subscribe(_ => OnDead())
             .AddTo(this);
-        _bullet = Resources.Load("Bullet/EnemyBullet") as GameObject;
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        var e = Singleton<EnemyResourceManager>.Instance;
+        _bullet = e.BulletObj;
+        _item = e.ItemObj;
+        _effect = e.EffectObj;
     }
 
     protected override void UpdateFrame()
     {
         base.UpdateFrame();
-        if (_gameManager.IsPlayerDead())
+        if (Singleton<GameManager>.Instance.IsPlayerDead())
         {
             DestroyThis();
         }
@@ -45,6 +48,7 @@ public class Enemy : Character
         {
             Instantiate(_item, transform.position, Quaternion.identity);
         }
+        Instantiate(_effect, transform.position, Quaternion.identity);
         DestroyThis();
     }
 
@@ -56,7 +60,6 @@ public class Enemy : Character
     public void SetItem()
     {
         haveItem = true;
-        _item = Resources.Load("Item/Churu") as GameObject;
         GetComponent<SpriteRenderer>().color = Color.red;
     }
 }

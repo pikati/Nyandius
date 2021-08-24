@@ -21,6 +21,7 @@ public class Mike : Character, IDamageApplicable
     public bool IsActiveDoubler { get; set; } = false;
 
     private GameTimer _animTimer = new GameTimer(0.5f);
+    private GameTimer _invicibleTimer = new GameTimer(0.5f);
     private void Start()
     {
         _oldPosition = new Vector3[_memoryPositionNum];
@@ -36,7 +37,7 @@ public class Mike : Character, IDamageApplicable
         _playerInputEventPorvider = GetComponent<IPlayerInputEventProvider>();
         _barrier = GetComponent<Barrier>();
         _missiler = Singleton<Missiler>.Instance;
-        _missiler.ShooterNum++;
+        _missiler.ShooterNum = 1;
         _bulletType = BulletType.Normal;
     }
 
@@ -57,6 +58,7 @@ public class Mike : Character, IDamageApplicable
         }
         SetOldPosition();
         UpdateOptionPosition();
+        _invicibleTimer.UpdateTimer();
     }
 
     protected override void Attack()
@@ -83,6 +85,8 @@ public class Mike : Character, IDamageApplicable
 
     public void ApplyDamage(in int damage = 1)
     {
+        if (!_invicibleTimer.IsTimeUp) return;
+        _invicibleTimer.ResetTimer();
         if (_barrier.IsActiveBarrier())
         {
             _barrier.DamageBarrier(damage);
@@ -153,13 +157,10 @@ public class Mike : Character, IDamageApplicable
     public void Restart()
     {
         Singleton<LifeManager>.Instance.ReduceLive();
-        _hp.Value = 1;
-        transform.position = new Vector3(-5, 0, 0);
-        IsActiveDoubler = false;
-        _activOptionNum = 0;
-        _missiler.ActiveMissiler = false;
-        _renderer.enabled = true;
+        Reset();
     }
+
+
 
     public void Reset()
     {
@@ -167,12 +168,16 @@ public class Mike : Character, IDamageApplicable
         transform.position = new Vector3(-5, 0, 0);
         IsActiveDoubler = false;
         _activOptionNum = 0;
+        _options[0].Reset();
+        _options[1].Reset();
+        _missiler.ShooterNum = 1;
         _missiler.ActiveMissiler = false;
         _renderer.enabled = true;
+        _bulletType = BulletType.Normal;
     }
 
     public void ToStart()
     {
-        transform.position = new Vector3(-5, 0, 0);
+        Singleton<CriSoundManager>.Instance.PlayBGM(CueID.Intoro);
     }
 }

@@ -19,13 +19,14 @@ public class Squirrel : Enemy
     protected override void Initialize()
     {
         _gm = Singleton<GameManager>.Instance;
-        _score = 300 + (_gm.LoopNum * 50);
-        _hp.Value = 1 + (_gm.LoopNum * 2);
+        _score = 20 + (_gm.LoopNum * 20);
+        _hp.Value = 1 + (_gm.LoopNum * 3);
         _playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         DefineTask();
         SetTask();
         this.UpdateAsObservable()
-            .Subscribe(_ => _task.UpdateTask());
+            .Subscribe(_ => _task.UpdateTask())
+            .AddTo(this);
         base.Initialize();
     }
 
@@ -87,5 +88,10 @@ public class Squirrel : Enemy
     {
         _task.AddTask(SquirelTask.Move);
         _task.AddTask(SquirelTask.Attack);
+    }
+
+    private void OnBecameInvisible()
+    {
+        DestroyThis();
     }
 }

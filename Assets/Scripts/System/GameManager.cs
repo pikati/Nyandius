@@ -13,7 +13,7 @@ public class GameManager : Singleton<GameManager>
     private GameTimer _resetTimer = new GameTimer(3.0f);
     private bool _endGame = false;
     private GameFacilitator _gameFicillitator;
-    public int LoopNum { get; private set; } = 1;
+    public int LoopNum { get; private set; } = 2;
     public GameTimer BossTimer { get; private set; } = new GameTimer(0);
     private bool _isMiddleBoss = true;
     public bool IsBoss = false;
@@ -34,11 +34,12 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
+        PowerUpManager.Initialize();
         PowerUpManager.SetPlayer(_player);
         _endGame = false;
-        ResetGame();
-        RestartGame();
-    }
+        StartGame();
+        Singleton<CriSoundManager>.Instance.PlayBGM(CueID.Intoro);
+}
 
     // Update is called once per frame
     void Update()
@@ -99,25 +100,49 @@ public class GameManager : Singleton<GameManager>
         _endGame = true;
     }
 
+    public void StartGame()
+    {
+        _player.Reset();
+        _enemyCreater.Reset();
+        Singleton<CriSoundManager>.Instance.PlayBGM(CueID.Intoro);
+    }
+
     private void RestartGame()
     {
         _endGame = false;
         _enemyCreater.Reset();
         _player.Restart();
+        PowerUpManager.Reset();
         _resetTimer.ResetTimer();
         Singleton<CriSoundManager>.Instance.PlayBGM(CueID.Intoro);
+        Singleton<ScoreManager>.Instance.StageScoreZero();
     }
 
-    private void ResetBossTimer()
+    //Invoke
+    public void ResetBossTimer()
     {
         if(_isMiddleBoss)
         {
-            BossTimer.ResetTimer(20.0f + (LoopNum * 5.0f));
+            BossTimer.ResetTimer(20.0f + (LoopNum * 10.0f));
         }
         else
         {
             IsBoss = true;
         }
         _isMiddleBoss = !_isMiddleBoss;
+    }
+
+    public void GameClear()
+    {
+        _endGame = false;
+        _player.Restart();
+        PowerUpManager.Reset();
+        _resetTimer.ResetTimer();
+        ResetLoopNum();
+    }
+
+    public void ResetLoopNum()
+    {
+        LoopNum = 0;
     }
 }

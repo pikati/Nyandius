@@ -20,6 +20,7 @@ public class Barrier : MonoBehaviour
     {
         _barrierNum = 10;
         _barrierObject.SetActive(true);
+        ChangeBarrierColor();
     }
 
     public void DamageBarrier(in int damage)
@@ -42,13 +43,6 @@ public class Barrier : MonoBehaviour
     private void DeactivateBarrier()
     {
         _barrierObject.SetActive(false);
-    }
-
-    private async UniTaskVoid Invicible(CancellationToken token)
-    {
-        _isInvincible = true;
-        await UniTask.Delay(TimeSpan.FromSeconds(1.0f), cancellationToken: token);
-        _isInvincible = false;
     }
 
     private void ChangeBarrierColor()

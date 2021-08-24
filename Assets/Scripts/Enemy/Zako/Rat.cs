@@ -22,12 +22,13 @@ public class Rat : Enemy
     {
         _gm = Singleton<GameManager>.Instance;
         _score = 200 + (_gm.LoopNum * 50);
-        _hp.Value = 1 + (_gm.LoopNum * 3);
+        _hp.Value = 1 + (_gm.LoopNum * 7);
         _playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         DefineTask();
         SetTask();
         this.UpdateAsObservable()
-            .Subscribe(_ => _task.UpdateTask());
+            .Subscribe(_ => _task.UpdateTask())
+            .AddTo(this);
         base.Initialize();
     }
 
@@ -61,7 +62,7 @@ public class Rat : Enemy
     {
         var bullet = Instantiate(_bullet, transform.position, Quaternion.identity).GetComponent<EnemyBullet>();
         bullet.SetDirection((_playerTransform.position - transform.position).normalized);
-        bullet.SetSpeed(5.0f + (_gm.LoopNum * 1.0f));
+        bullet.SetSpeed(5.0f + (_gm.LoopNum * 1.25f));
         return true;
     }
 

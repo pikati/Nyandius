@@ -9,6 +9,9 @@ public class ScoreManager : Singleton<ScoreManager>
 
     private readonly IntReactiveProperty _hiScore = new IntReactiveProperty(0);
     public IReactiveProperty<int> HiScore => _hiScore;
+
+    private int _stageScore = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +23,7 @@ public class ScoreManager : Singleton<ScoreManager>
     public void AddScore(int score)
     {
         _score.Value += score;
+        _stageScore += score;
     }
 
     public void ResetScore()
@@ -32,5 +36,16 @@ public class ScoreManager : Singleton<ScoreManager>
         _hiScore.Value = _score.Value > _hiScore.Value ? _score.Value : _hiScore.Value ;
         PlayerPrefs.SetInt("SCORE", _hiScore.Value);
         PlayerPrefs.Save();
+    }
+
+    public void StageScoreZero()
+    {
+        _score.Value -= _stageScore;
+        ResetStageScore();
+    }
+
+    public void ResetStageScore()
+    {
+        _stageScore = 0;
     }
 }

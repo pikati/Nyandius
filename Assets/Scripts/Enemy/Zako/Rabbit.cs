@@ -18,12 +18,13 @@ public class Rabbit : Enemy
     {
         _gm = Singleton<GameManager>.Instance;
         _score = 100 + (_gm.LoopNum * 100);
-        _hp.Value = 1 + (_gm.LoopNum * 6);
+        _hp.Value = 1 + (_gm.LoopNum * 10);
         _posY = transform.position.y;
         DefineTask();
         SetTask();
         this.UpdateAsObservable()
-            .Subscribe(_ => _task.UpdateTask());
+            .Subscribe(_ => _task.UpdateTask())
+            .AddTo(this);
         base.Initialize();
     }
 

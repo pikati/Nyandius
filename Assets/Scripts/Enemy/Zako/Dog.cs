@@ -18,13 +18,14 @@ public class Dog : Enemy
     {
         _gm = Singleton<GameManager>.Instance;
         _score = 400 + (_gm.LoopNum * 200);
-        _hp.Value = 1 + (_gm.LoopNum * 3);
+        _hp.Value = 1 + (_gm.LoopNum * 8);
         _attackTimer = new GameTimer(_attackInterval);
         _playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         DefineTask();
         SetTask();
         this.UpdateAsObservable()
-            .Subscribe(_ => _task.UpdateTask());
+            .Subscribe(_ => _task.UpdateTask())
+            .AddTo(this);
         base.Initialize();
     }
 
@@ -50,7 +51,7 @@ public class Dog : Enemy
                     bullet2.SetDirection(dir);
                     bullet2.SetSpeed(3.0f);
                 }
-                if(_gm.LoopNum >= 3)
+                if(_gm.LoopNum >= 2)
                 {
                     var bullet2 = Instantiate(_bullet, transform.position, Quaternion.identity).GetComponent<EnemyBullet>();
                     bullet2.SetDirection(dir);

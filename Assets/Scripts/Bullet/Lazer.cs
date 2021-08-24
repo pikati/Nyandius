@@ -6,7 +6,7 @@ public class Lazer : Bullet
 {
     protected override void Initialize()
     {
-        _damage = 0.04f;
+        _damage = 0.04f + Singleton<GameManager>.Instance.LoopNum * 0.02f;
     }
     protected override void Move()
     {

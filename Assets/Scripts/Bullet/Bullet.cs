@@ -11,6 +11,10 @@ public abstract class Bullet : Behaviour
     protected override void UpdateFrame()
     {
         Move();
+        if (Singleton<GameManager>.Instance.IsPlayerDead())
+        {
+            DestroyThis();
+        }
     }
 
     protected virtual void OnBecameInvisible()

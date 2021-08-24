@@ -48,4 +48,10 @@ public class Option : MonoBehaviour
             _characterAttack.Attack(transform.position, _bulletType);
         }
     }
+
+    public void Reset()
+    {
+        _isActive = false;
+        _spriteRenderer.enabled = false;
+    }
 }

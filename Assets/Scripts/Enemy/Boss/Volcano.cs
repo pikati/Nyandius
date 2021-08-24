@@ -11,17 +11,18 @@ public class Volcano : Enemy
 
     protected override void Initialize()
     {
-        _hp.Value = 500;
-        _score = 10000;
+        _gameManager = Singleton<GameManager>.Instance;
+        _hp.Value = 400;
+        _score = 100000 * _gameManager.LoopNum * 2;
         _bullet = Resources.Load("Bullet/VolcanoBullet") as GameObject;
         _shotTimer = new GameTimer(Random.Range(0f, 2f));
-        _gameManager = Singleton<GameManager>.Instance;
-        _coolTimeMin = 0.5f / (1 + _gameManager.LoopNum);
-        _coolTimeMax = 1.0f / (1 + _gameManager.LoopNum);
+        _coolTimeMin = 0.5f / (1 + _gameManager.LoopNum * 1.5f);
+        _coolTimeMax = 1.0f / (1 + _gameManager.LoopNum * 1.5f);
     }
 
     protected override void UpdateFrame()
     {
+        
         if(_shotTimer.UpdateTimer())
         {
             var b = Instantiate(_bullet, transform.position, Quaternion.identity).GetComponent<VolcanoBullet>();
@@ -35,6 +36,11 @@ public class Volcano : Enemy
         if(_gameManager.BossTimer.IsTimeUp)
         {
             transform.position += Vector3.left * 1.5f * Time.deltaTime;
+        }
+        base.UpdateFrame();
+        if (transform.position.x < -10.0f)
+        {
+            DestroyThis();
         }
     }
 }

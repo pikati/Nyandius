@@ -16,6 +16,7 @@ public class ResultController : MonoBehaviour
     private IntReactiveProperty _index = new IntReactiveProperty(0);
     private InputController _ic;
     private bool _isInput = true;
+    private GameTimer _timer = new GameTimer(1.0f);
 
     void Start()
     {
@@ -32,6 +33,7 @@ public class ResultController : MonoBehaviour
     {
         if (Singleton<GameFacilitator>.Instance.GetGameState() != GameStateController.GameStateEnum.Result) return;
         if (Singleton<GameFacilitator>.Instance.CanInput) return;
+        if (!_timer.UpdateTimer()) return;
         if (_ic.A)
         {
             if (_isInput)

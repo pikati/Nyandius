@@ -22,19 +22,20 @@ public class Shark : Enemy
 
     protected override void Initialize()
     {
-        _score = 2000 + (_gameManager.LoopNum * 2000);
-        _hp.Value = 50 + (_gameManager.LoopNum * 75);
+        _gameManager = Singleton<GameManager>.Instance;
+        _score = 2000 + (_gameManager.LoopNum * 4000);
+        _hp.Value = 50 + (_gameManager.LoopNum * 200);
         _maxHP = _hp.Value;
         _shotTimer = new GameTimer();
         _speed = 2.0f;
-        _gameManager = Singleton<GameManager>.Instance;
         _enemyCreater = GameObject.Find("EnemyPopManager").GetComponent<EnemyCreater>();
         _BGController = GameObject.Find("BackGround").GetComponent<BGController>();
         _playerMove = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMove>();
         DefineTask();
         SetTask();
         this.UpdateAsObservable()
-            .Subscribe(_ => _task.UpdateTask());
+            .Subscribe(_ => _task.UpdateTask())
+            .AddTo(this);
         base.Initialize();
     }
 
@@ -90,13 +91,13 @@ public class Shark : Enemy
                 bullet3.SetDirection(Vector3.left);
                 bullet3.SetSpeed(5.5f);
             }
-            if (_gameManager.LoopNum >= 3)
+            if (_gameManager.LoopNum >= 2)
             {
                 var bullet2 = Instantiate(_bullet, transform.position, Quaternion.identity).GetComponent<EnemyBullet>();
-                bullet2.SetDirection(new Vector3(1, 1, 0).normalized);
+                bullet2.SetDirection(new Vector3(-1, 0.3f, 0).normalized);
                 bullet2.SetSpeed(7.5f);
                 var bullet3 = Instantiate(_bullet, transform.position, Quaternion.identity).GetComponent<EnemyBullet>();
-                bullet3.SetDirection(new Vector3(1, -1, 0).normalized);
+                bullet3.SetDirection(new Vector3(-1, -0.3f, 0).normalized);
                 bullet3.SetSpeed(7.5f);
             }
             _shotTimer.ResetTimer(Random.Range(0.2f, 1.0f));
@@ -137,13 +138,11 @@ public class Shark : Enemy
     {
         _enemyCreater.Reset();
         _BGController.ResetPosition();
-        _playerMove.ResetPosition();
-        base.OnDead();
-    }
-
-    private void OnBecameInvisible()
-    {
         _gameManager.CountLoop();
-        Singleton<CriSoundManager>.Instance.PlayBGM(CueID.Intoro);
+        if (Singleton<GameManager>.Instance.LoopNum == 3)
+        {
+            Singleton<GameFacilitator>.Instance.DispResult();
+        }
+        base.OnDead();
     }
 }

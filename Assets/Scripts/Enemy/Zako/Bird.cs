@@ -19,13 +19,14 @@ public class Bird : Enemy
     protected override void Initialize()
     {
         _gm = Singleton<GameManager>.Instance;
-        _score = 200 * (_gm.LoopNum * 50);
-        _hp.Value = 1 + _gm.LoopNum;
+        _score = 200 + (_gm.LoopNum * 50);
+        _hp.Value = 1 + _gm.LoopNum * 3;
         _playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         DefineTask();
         SetTask();
         this.UpdateAsObservable()
-            .Subscribe(_ => _task.UpdateTask());
+            .Subscribe(_ => _task.UpdateTask())
+            .AddTo(this);
         base.Initialize();
     }
 
@@ -65,7 +66,7 @@ public class Bird : Enemy
 
     private void OnTaskAttackEnter()
     {
-        _moveDirection = new Vector3(1 + 0.25f * _gm.LoopNum, 0, 0);
+        _moveDirection = new Vector3(-1 + -0.25f * _gm.LoopNum, 0, 0);
     }
 
     private bool OnTaskAttackUpdate()
