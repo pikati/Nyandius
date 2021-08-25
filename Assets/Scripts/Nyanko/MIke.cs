@@ -160,8 +160,6 @@ public class Mike : Character, IDamageApplicable
         Reset();
     }
 
-
-
     public void Reset()
     {
         _hp.Value = 1;

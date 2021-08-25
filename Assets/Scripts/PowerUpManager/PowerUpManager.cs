@@ -27,10 +27,6 @@ public class PowerUpManager
         {
             PowerUp();
         }
-        if(Singleton<InputController>.Instance.X)
-        {
-            GetPowerUp();
-        }
     }
 
     public void Destory()

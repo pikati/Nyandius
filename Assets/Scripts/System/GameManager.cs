@@ -114,6 +114,7 @@ public class GameManager : Singleton<GameManager>
         _player.Restart();
         PowerUpManager.Reset();
         _resetTimer.ResetTimer();
+        IsBoss = false;
         Singleton<CriSoundManager>.Instance.PlayBGM(CueID.Intoro);
         Singleton<ScoreManager>.Instance.StageScoreZero();
     }
@@ -135,7 +136,7 @@ public class GameManager : Singleton<GameManager>
     public void GameClear()
     {
         _endGame = false;
-        _player.Restart();
+        _player.Reset();
         PowerUpManager.Reset();
         _resetTimer.ResetTimer();
         ResetLoopNum();

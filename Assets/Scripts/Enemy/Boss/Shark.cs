@@ -144,5 +144,6 @@ public class Shark : Enemy
             Singleton<GameFacilitator>.Instance.DispResult();
         }
         base.OnDead();
+        Singleton<ScoreManager>.Instance.ResetStageScore();
     }
 }
