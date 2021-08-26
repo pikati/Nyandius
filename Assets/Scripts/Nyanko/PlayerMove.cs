@@ -4,35 +4,61 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField]
+    private float _speed = 1.0f;
+    private IPlayerInputEventProvider _playerInputEventProvider;
+    private Speeder _speeder = new Speeder();
+    Vector3 _screenLeftBottom;
+    Vector3 _screenRightTop;
     void Start()
     {
-        
+        _playerInputEventProvider = GetComponent<IPlayerInputEventProvider>();
+        _screenLeftBottom = Camera.main.ScreenToWorldPoint(Vector3.zero);
+        _screenRightTop = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
+        _speeder.Initialize();
     }
 
-    // Update is called once per frame
     void Update()
     {
+        Move(_playerInputEventProvider.MoveDirection.Value);
+    }
 
-        var move = Singleton<InputController>.Instance.MoveValue;
-        transform.position += new Vector3(move.x * Time.deltaTime, move.y * Time.deltaTime);
-        if (Singleton<InputController>.Instance.Up)
+    private void Move(Vector2 move)
+    {
+        var pos = transform.position;
+        if(pos.x < _screenLeftBottom.x)
         {
-            transform.position += new Vector3(0, 1.0f * Time.deltaTime, 0);
+            if(move.x < 0)
+            {
+                move.x = 0;
+            }
         }
-        if (Singleton<InputController>.Instance.Down)
+        else if(pos.x > _screenRightTop.x)
         {
-            transform.position += new Vector3(0, -1.0f * Time.deltaTime, 0);
+            if(move.x > 0)
+            {
+                move.x = 0;
+            }
+        }
+        if(pos.y < _screenLeftBottom.y)
+        {
+            if(move.y < 0)
+            {
+                move.y = 0;
+            }
+        }
+        else if(pos.y > _screenRightTop.y)
+        {
+            if(move.y > 0)
+            {
+                move.y = 0;
+            }
+        }
+        transform.position += new Vector3(move.x, move.y) * (_speed + _speeder.SpeedUpNum) * Time.deltaTime;
+    }
 
-        }
-        if (Singleton<InputController>.Instance.Left)
-        {
-            transform.position += new Vector3(-1.0f * Time.deltaTime, 0, 0);
-
-        }
-        if (Singleton<InputController>.Instance.Right)
-        {
-            transform.position += new Vector3(1.0f * Time.deltaTime, 0, 0);
-        }
+    public void ResetPosition()
+    {
+        transform.position = new Vector3(-5, 0, 0);
     }
 }

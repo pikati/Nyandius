@@ -27,10 +27,10 @@ public class InputController : Singleton<InputController>
     public bool L3 { get; private set; }
     public bool SelectPress { get; private set; }
     public bool StartPress { get; private set; }
-    public bool Up { get; private set; }
-    public bool Down { get; private set; }
-    public bool Left { get; private set; }
-    public bool Right { get; private set; }
+    public float Up { get; private set; }
+    public float Down { get; private set; }
+    public float Left { get; private set; }
+    public float Right { get; private set; }
 
 
     #endregion
@@ -78,9 +78,9 @@ public class InputController : Singleton<InputController>
         L3 = l3.triggered;
         SelectPress = select.triggered;
         StartPress = start.triggered;
-        Up = up.triggered;
-        Down = down.triggered;
-        Left = left.triggered;
-        Right = right.triggered;
+        Up = up.ReadValue<float>();
+        Down = down.ReadValue<float>();
+        Left = left.ReadValue<float>();
+        Right = right.ReadValue<float>();
     }
 }
