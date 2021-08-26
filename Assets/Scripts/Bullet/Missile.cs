@@ -12,7 +12,7 @@ public class Missile : Bullet
     {
         _missiler = Singleton<Missiler>.Instance;
         _missiler.MissleNum++;
-        _speed = 0.01f;
+        _speed = 3.0f;
         _damage = 1 + Singleton<GameManager>.Instance.LoopNum * 1.5f;
     }
 
@@ -22,7 +22,8 @@ public class Missile : Bullet
         {
             _direction = new Vector2(1.0f, -1.0f);
         }
-        transform.position += new Vector3(_speed * _direction.x, _speed * _direction.y, 0);
+        var d = Time.deltaTime;
+        transform.position += new Vector3(_speed * _direction.x * d, _speed * _direction.y * d, 0);
         _isCollisionGround = false;
     }
 

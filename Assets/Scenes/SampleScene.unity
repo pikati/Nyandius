@@ -5458,7 +5458,7 @@ MonoBehaviour:
   cueSheets:
   - name: CueSheet_0
     acbFile: CueSheet_0.acb
-    awbFile: CueSheet_0.awb
+    awbFile: 
     loaderStatus: 0
   dspBusSetting: 
   dontDestroyOnLoad: 0

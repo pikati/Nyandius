@@ -6,11 +6,11 @@ public class Lazer : Bullet
 {
     protected override void Initialize()
     {
-        _damage = 0.04f + Singleton<GameManager>.Instance.LoopNum * 0.02f;
+        _damage = 0.1f + Singleton<GameManager>.Instance.LoopNum * 0.08f;
     }
     protected override void Move()
     {
-        transform.position += new Vector3(_speed + Time.deltaTime, 0, 0);
+        transform.position += new Vector3(_speed * Time.deltaTime, 0, 0);
     }
 
     public override void OnCollision(Collider col)

@@ -10,7 +10,7 @@ public class UpBullet : Bullet
     }
     protected override void Move()
     {
-        transform.position += new Vector3(_speed + Time.deltaTime, _speed + Time.deltaTime, 0);
+        transform.position += new Vector3(_speed * Time.deltaTime, _speed * Time.deltaTime, 0);
     }
 
     public override void OnCollision(Collider col)

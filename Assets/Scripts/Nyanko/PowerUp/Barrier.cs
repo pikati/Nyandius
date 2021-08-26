@@ -40,9 +40,10 @@ public class Barrier : MonoBehaviour
         return _barrierNum != 0;
     }
 
-    private void DeactivateBarrier()
+    public void DeactivateBarrier()
     {
         _barrierObject.SetActive(false);
+        _barrierNum = 0;
     }
 
     private void ChangeBarrierColor()

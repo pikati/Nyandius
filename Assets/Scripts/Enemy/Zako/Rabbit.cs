@@ -37,7 +37,7 @@ public class Rabbit : Enemy
     {
         var pos = transform.position;
         transform.position = new Vector3(pos.x - _speed * Time.deltaTime, _posY + _rad * Mathf.Sin(_angle), 0);
-        _angle += 0.0075f + (_gm.LoopNum * 0.002f);
+        _angle += 0.075f + (_gm.LoopNum * 0.002f);
         if(_angle > Mathf.PI * 2)
         {
             _angle -= Mathf.PI * 2;

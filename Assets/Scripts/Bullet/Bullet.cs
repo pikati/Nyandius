@@ -4,7 +4,7 @@ public abstract class Bullet : Behaviour
     {
 
     }
-    protected float _speed = 0.1f;
+    protected float _speed = 20.0f;
     protected bool _canPierce = false;
     protected float _damage = 1;
 

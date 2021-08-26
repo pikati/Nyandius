@@ -57,11 +57,11 @@ public class GameFacilitator : Singleton<GameFacilitator>
         return _gameStateController.GameState;
     }
 
-    public void DispResult()
+    public void DispResult(bool isClear = false)
     {
         
         _gameManager.GameClear();
-        if (Singleton<GameManager>.Instance.LoopNum == 3)
+        if (isClear)
         {
             _clear.SetActive(true);
         }

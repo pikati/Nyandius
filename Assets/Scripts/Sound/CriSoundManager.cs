@@ -35,13 +35,8 @@ public class CriSoundManager : Singleton<CriSoundManager>
     public void PlaySE(CueID cueID)
     {
         if (cueID >= CueID.Intoro) return;
-        if(cueID == CueID.Lazer || cueID == CueID.Shot)
-        {
-            _atomExPlayer.SetVolume(0.3f);
-        }
         _atomExPlayer.SetCue(_atomExAcb, _cueInfoList[(int)cueID].name);
         _atomExPlayer.Start();
-        _atomExPlayer.SetVolume(1.0f);
     }
 
     public void PlayBGM(CueID cueID)

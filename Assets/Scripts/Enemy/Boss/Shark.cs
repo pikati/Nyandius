@@ -24,7 +24,7 @@ public class Shark : Enemy
     {
         _gameManager = Singleton<GameManager>.Instance;
         _score = 2000 + (_gameManager.LoopNum * 4000);
-        _hp.Value = 50 + (_gameManager.LoopNum * 200);
+        _hp.Value = 100 + (_gameManager.LoopNum * 250);
         _maxHP = _hp.Value;
         _shotTimer = new GameTimer();
         _speed = 2.0f;
@@ -141,7 +141,7 @@ public class Shark : Enemy
         _gameManager.CountLoop();
         if (Singleton<GameManager>.Instance.LoopNum == 3)
         {
-            Singleton<GameFacilitator>.Instance.DispResult();
+            Singleton<GameFacilitator>.Instance.DispResult(true);
         }
         base.OnDead();
         Singleton<ScoreManager>.Instance.ResetStageScore();

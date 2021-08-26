@@ -12,10 +12,9 @@ public class Mike : Character, IDamageApplicable
     private Barrier _barrier;
     private readonly int _optionMax = 2;
     private int _activOptionNum = 0;
-    private readonly int _memoryPositionNum = 64;
+    private readonly int _memoryPositionNum = 48;
     private Vector3[] _oldPosition;//オプションの座標で利用
     private ReactiveProperty<Vector3> _position = new ReactiveProperty<Vector3>();
-    private bool _skipUpdateOldPosition = false;
     private SpriteRenderer _renderer;
 
     public bool IsActiveDoubler { get; set; } = false;
@@ -134,17 +133,11 @@ public class Mike : Character, IDamageApplicable
     private void SetOldPosition()
     {
         if (_oldPosition[0] == transform.position) return;
-        if(_skipUpdateOldPosition)
-        {
-            _skipUpdateOldPosition = false;
-            return;
-        }
         for (int i = _memoryPositionNum - 1; i > 0; i--)
         {
             _oldPosition[i] = _oldPosition[i - 1];
         }
         _oldPosition[0] = transform.position;
-        _skipUpdateOldPosition = true;
 
     }
 
@@ -168,6 +161,7 @@ public class Mike : Character, IDamageApplicable
         _activOptionNum = 0;
         _options[0].Reset();
         _options[1].Reset();
+        _barrier.DeactivateBarrier();
         _missiler.ShooterNum = 1;
         _missiler.ActiveMissiler = false;
         _renderer.enabled = true;
